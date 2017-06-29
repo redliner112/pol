@@ -16,11 +16,14 @@ public class Exam {
 			Connection con = DBConn.getCon();//db에 연결.
 			
 			String sql = "select ID,PWD,NAME from user";
-			if(!name.equals("")){//빈문자열로 오지않았다면<<<<<무슨소리지.?
-				sql += " WHERE NAME ='"+ name +"'";
+			if(!name.equals("")){
+				sql += " WHERE NAME =?";
 			}
 			
 			PreparedStatement prestmt = con.prepareStatement(sql);//select*from user;까지 입력한상태.
+			if(!name.equals("")){
+				prestmt.setString(1, name);
+			}
 			ResultSet rs = prestmt.executeQuery();
 			while (rs.next()) {//해당하는 로우가 없을때가지 계속돈다.
 				userlist.add(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3));//첫번째값 두번째깞 세번째값
@@ -37,15 +40,22 @@ public class Exam {
 		try{
 		Connection con = DBConn.getCon();
 		Scanner scan = new Scanner(System.in);
-		HashMap<String,String> valueHm = new HashMap<String,String>();
-		valueHm.put("id", scan.nextLine());
-		valueHm.put("pwd", scan.nextLine());
-		valueHm.put("name", scan.nextLine());
-		valueHm.put("age", scan.nextLine());
+		HashMap<String,String> hm = new HashMap<String,String>();
+		System.out.println("id를 입력해주세요");
+		hm.put("id", scan.nextLine());
+		System.out.println("pwd를 입력해주세요");
+		hm.put("pwd", scan.nextLine());
+		System.out.println("name를 입력해주세요");
+		hm.put("name", scan.nextLine());
+		System.out.println("age를 입력해주세요");
+		hm.put("age", scan.nextLine());
 		String sql = "insert into user(id,pwd,name,age)"
-				+ "values('"+hmget("id")+"','"+ hm.get("pwd")+"','"+hm.get("name")+""'," + Integer.parseInt(age);";
+				+ "values(?,?,?,?)";
 		PreparedStatement prestmt = con.prepareStatement(sql);//con.prepareStatement(sql)로 쓸수있는 판을 넣어서 prestmt변수에 넣어준다.
-		
+		prestmt.setString(1,hm.get( "id"));
+		prestmt.setString(2,hm.get( "pwd"));
+		prestmt.setString(3,hm.get( "name"));
+		prestmt.setString(4, hm.get( "age"));
 		int  result = prestmt.executeUpdate();//prestmt.executeUpdate실행하면 1나온다는것.
 		DBConn.closeCon();
 		if(result==1){
@@ -77,12 +87,11 @@ public class Exam {
 
 public static void main(String[]args){
 	Exam e = new Exam();
-	if(e.insertUser()){
-		System.out.println("잘들어갔다.");	
-	}
-	boolean isDel = e.deleteUser(1){
+	//if(e.insertUser()){
+	//	System.out.println("잘들어갔다.");	
+//	}
 		
-	}
+	//}
 	List<String> userList = e.getUserIDLists("");
 	for(int i = 0;i<userList.size();i++)
 	System.out.println(userList.get(i));
