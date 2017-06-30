@@ -13,6 +13,7 @@ public class UserDAO {
 
 	public List<HashMap> doSelect(String sql) throws Exception{
 		List<HashMap> userlist = new ArrayList<HashMap>();
+		
 		try{
 			Connection con = DBConn.getCon();
 			PreparedStatement prestmt = con.prepareStatement(sql);
@@ -21,6 +22,7 @@ public class UserDAO {
 
 			while (rs.next()){//컬럼정볼를 가장먼저 읽는다.(rs.next()로우가 하나씩 지나간다) <=이게 컬럼넘버
 				HashMap hm = new HashMap();
+		
 				int colCount = rsmd.getColumnCount();//getColumnCount로 순서대 숫자를 매긴다.
 				for(int i=1;i<=colCount;i++){
 					String colName = rsmd.getColumnName(i);
