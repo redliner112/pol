@@ -11,7 +11,7 @@ public class ListExam extends HashMap {
 		for (int i = 4; i >= 0; i--) {
 			arrList.add(((int) (Math.random() * 45) + 1));
 		}
-		Collections.reverse(arrList);
+		Collections.sort(arrList);
 		for (int i = 0; i < arrList.size(); i++) {
 			System.out.println(arrList.get(i));
 		}
