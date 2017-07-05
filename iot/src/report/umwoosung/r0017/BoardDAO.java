@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,19 +20,19 @@ public class BoardDAO {
 		con = DBConn.getCon();
 	}
 
-	public boolean insertBoard() throws SQLException {
-		
-		String sql = "insert into board(title,content,writer,reg_date) values('게시물제목3','게시판내용3',3,new())";
-		
-		Statement st = con.createStatement();
-		int result = st.executeUpdate(sql);
-		if (result == 1) {
-			st.close();
-			st = null;
-			return true;
-		}
-		return false;
-	}
+//	public boolean insertBoard() throws SQLException {
+//		
+//		String sql = "insert into board(title,content,writer,reg_date) values('게시물제목3','게시판내용3',3,new())";
+//		
+//		Statement st = con.createStatement();
+//		int result = st.executeUpdate(sql);
+//		if (result == 1) {
+//			st.close();
+//			st = null;
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public List<Map> selectBoard() throws SQLException {
 		String sql = "select title,content,writer,reg_date from board";
@@ -60,16 +59,14 @@ public class BoardDAO {
 		BoardDAO bdao = new BoardDAO();
 		try {
 			bdao.setConnection();
-		
-			
 			List<Map> boardList = bdao.selectBoard();
 			CommentDAO dao = new CommentDAO();
 			for (Map m : boardList) {
 				System.out.println(m);
-				List<Map> commentList = dao.getCommentList(Integer.parseInt((String) m.get("writer")));
-				for (Map m2 : commentList) {
-					System.out.println(m2);
-				}
+//				List<Map> commentList = dao.getCommentList(Integer.parseInt((String) m.get("writer")));
+//				for (Map m2 : commentList) {
+//					System.out.println(m2);
+//				}
 			}
 
 		} catch (Exception e) {
