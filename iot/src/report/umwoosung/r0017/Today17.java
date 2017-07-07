@@ -19,7 +19,8 @@ package report.umwoosung.r0017;
  * desc user; user 테이블을 설명해주는것.
  * 
  *  foreign key
- *  1:n관계를 맺는것. 유일한것인 id와 무한으로 들어갈수있는 게시판에 들어가는 writer와의 관계
+ *  
+ *  1:n관계를 맺는것- 유일한것인 id와 무한으로 들어갈수있는 게시판에 들어가는 writer와의 관계
  * 
  */
 

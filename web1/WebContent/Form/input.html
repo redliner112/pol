@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function makeSureForm(){
+	var nameObj = document.getElementById("name");
+	var passObj = document.getElementById("pass");
+	var sbObj = document.getElementById("sb");
+	alert(sbObj.value);
+	alert(nameObj.value);
+	alert(passObj.value);
+}
+</script>
+<body>
+<form id="test_form" method="get" action="/test.user">
+	이름:<input type="text" id="name" name="name"/>	<br/>
+	비밀번호 : <input type ="password" id= "pass" name="pass"/><br/>
+	전송 :<input type = "submit" name="s_btn" value="전송이다"id="sb"/></td>
+	<input type = "button" value="확인" onclick="makeSureForm()"/>
+	<input type="submit" value="전송"/>
+</form>
+</body>
+</html>
