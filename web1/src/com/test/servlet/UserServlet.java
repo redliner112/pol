@@ -50,9 +50,15 @@ public class UserServlet extends HttpServlet{
 				}else{
 					doProcess(resq,"값을 바르게 입력하세요");
 				}
+				
+				
+				
 		}else if(command.equals("DELETE")){
 			String user_num = req.getParameter("user_num");
 			System.out.println("삭제할번호 : " +  user_num);
+			
+			
+			
 		}else if(command.equals("UPDATE")){
 			String user_num = req.getParameter("user_num");
 			System.out.println("업데이트할번호 : " + user_num);
@@ -65,6 +71,9 @@ public class UserServlet extends HttpServlet{
 			hm.put("name", name);
 			hm.put("class_num", class_num);
 			hm.put("age", age);
+			
+			
+			
 		}else if(command.equals("SELECT")){
 			String name = req.getParameter("name");
 			System.out.println("이름 : " + name);

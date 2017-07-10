@@ -18,7 +18,7 @@ public class UserService {
 		PreparedStatement ps = null;
 		try{
 			con = DBConn.getCon();
-			String sql = "insert into user_info(in, pwd,name,class_num,age)";
+			String sql = "insert into user_info(id, pwd,name,class_num,age)";
 			sql+= "values(?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
