@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>개신기</title>
+</head>
+<script>
+function checkValue(){
+	var num1Obj = document.getElementById("num1");
+	var num1 = parseInt(num1Obj.value);
+	var num2Obj = document.getElementById("num2");
+	var num2 = parseInt(num2Obj.value);
+	var opObj = document.getElementById("op");
+
+		if(num1Obj.value.trim()==""||isNan(num1)){
+			alert("값을 제대로 입력해주세요");
+			num1Obj.focus();
+			return false;
+		}
+		if(num2Obj.value.trim()==""||isNan(num2)){
+			alert("값을 제대로 입력해주세요");
+			num2Obj.focus();
+			return false;
+		}
+		if(opObj.value.trim()==""){
+			alert("값을 제대로 입력해주세요");
+			opObj.foucus();
+			return false;
+		}
+		return true;
+}
+
+</script>
+<body>
+<form action = "/*.test" onsubmit="checkValue()">
+	<table border="1">
+		<tr>
+			<td>숫자1</td>
+			<td>연산자</td>
+			<td>숫자2</td>
+		</tr>
+		<tr>
+			<td><input type = "text" name = "num1" id = "num1"/></td>
+			<td><select id = "op" name = "op">
+					<option value ="">선택</option>
+					<option value ="+">plus</option>
+					<option value ="-">minus</option>
+					<option value ="*">multiple</option>
+					<option value ="/">division</option>
+			</select></td>
+			<td><input  type="text" name = "num2" id = "num2"/></td>
+		</tr>
+		<td colspan ="3"><input type = "submit" value = "계산해"/></td> 
+	</table>
+</form>
+
+</body>
+</html>

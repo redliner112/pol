@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function move(url){
+	location.href=url;
+}
+</script>
+<body>
+<a href="http://www.naver.com">네이버</a>
+<div onclikc="move()">네이버</div>
+
+<table border = "1">
+<tr>
+	<td>화면이름</td>
+	<td>이동버튼</td>
+</tr>
+<tr>
+	<td>유저리스트</td>
+	<td><input type = "button" value = "이동" onclick="move('/board/select_board.html') name"/></td>
+</tr>
+<tr>
+	<td>회원가입</td>
+	<td><input type = "button" value = "이동" onclick="move('/board/sign_in.html')"/></td>
+</tr>
+<tr>
+	<td>유저삭제</td>
+	<td><input type = "button" value = "이동" onclick="move('/board/delete_board.html')"/></td>
+</tr>
+</table>
+</body>
+</html>

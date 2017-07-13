@@ -55,7 +55,7 @@ public class BoardService {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
-			String sql = "select title,content,writer from board";
+			String sql = "select num,title,content,writer from board";
 			if(hm.get("title")!=null){
 				sql+=" where title like ?";
 			}
@@ -68,7 +68,10 @@ public class BoardService {
 			List titleList =  new ArrayList();
 			while(rs.next()){
 				HashMap hm1 = new HashMap();
+				hm1.put("num", rs.getString("num"));
 				hm1.put("title", rs.getString("title"));
+				hm1.put("content", rs.getString("content"));
+				hm1.put("writer", rs.getString("writer"));
 				titleList.add(hm1);
 			}
 			return titleList;
@@ -100,6 +103,7 @@ public class BoardService {
 					
 			ps = con.prepareStatement(sql);
 			ps.setString(1, hm.get("num"));
+			System.out.println("num");
 			int result = ps.executeUpdate();
 			if(result==1){
 				con.commit();
@@ -130,9 +134,8 @@ public class BoardService {
 		try{
 			con = DBConn.getCon();
 			String sql = "update board";
-					sql+="set ?,?,?";
-					sql +=" where=?";
-					
+					sql+="set title='?',content='?',writer='?'";
+					sql+=" where num=?";
 					ps = con.prepareStatement(sql);
 			ps.setString(1, hm.get("title"));
 			ps.setString(2, hm.get("content"));
@@ -141,6 +144,7 @@ public class BoardService {
 			int result = ps.executeUpdate();
 			if(result==1){
 				con.commit();
+				return true;
 			}
 			
 		}catch(ClassNotFoundException e){
