@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function makeInput(){
+	var rdObj = document.getElementById("r_div");
+	var cnObj = document.getElementById("cnt");
+	var inputStr = "<input type = 'text' id = 'txt'>";
+	for(var i=0;i<cnObj.value;i++){
+	rdObj.innerHTML += inputStr
+	}
+}
+</script>
+<body>
+생성갯수<input type = "text" id = "cnt"/><input type = "button" value = "생성" onclick = "makeInput()"/>
+<div id = "r_div"></div>
+</body>
+</html>

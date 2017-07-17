@@ -7,7 +7,8 @@
  * 아래로 내려갈때의 명령어
  * 위로 올라갈때의 명령어
  * 
- * 자바스크립트의 단어 틀린 에러잡는법.(function 안에서 써야함. 스크립트만됨. html은 안됨)
+ * 자바스크립트의 단어 틀린 에러잡는법.
+ * (function 안에서 써야함. 스크립트만됨. html은 안됨)
  * 		try {
  * 
  * 			} catch (e) {
@@ -39,20 +40,17 @@ var Ajax = function(num){
 	그래서 그 클래스밖에서 쓰고싶으면 private형식이 아니게되는 this num3=10을
 	써줘야한다.
 	그래야 하는 이유.
-		1.오버라이딩만 있어서 여러사람이 일할경우 다른사람의 함수명이 오버라이딩
+	-오버라이딩만 있어서 여러사람이 일할경우 다른사람의 함수명이 오버라이딩
 		되기때문에 오버라이딩이 안되는걸로 쓰기위해서.
 	
 	
 	클래스 밖에서는 그의미는 없다.
 	
-	
+	ex)
 function makeThing(btnObj){
 	var fObj = btnObj.form;
 
 		<form>
-<!-- 생성갯수 text에는 숫자만 들어갈 수 있어요~ -->
-<!-- 생성버튼을 클릭하면 생성갯수만큼 r_div에 input tag가 들어가면 되요~ -->
-<!-- 생성된 input tag의 id는 mk1부터 생성된 갯수만큼 1씩 늘어나요! -->
 생성갯수 : <input type="text" name="makeNum"/>
 <input type="button" value="생성!!!" onclick="makeThing(this)"/>
 <div id="r_div"></div>
