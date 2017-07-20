@@ -7,3 +7,28 @@ url이 바뀌면 get방식.
 xml
 json
 var params = "?";//호출하겠다?정의해주겠다 로 ?중심으로 나뉜다.
+ 
+ ajax
+ 	>servlet의 하단<
+ public void doProcess(HttpServletResponse resq, String writeStr) throws IOException {
+		resq.setContentType("text/html; charset = UTF-8");
+		PrintWriter out = resq.getWriter();
+		out.print(writeStr);
+ 
+  >html화면의 ajax하단<
+xhr.onreadystatechange=function(){
+   		if (xhr.readyState==4){
+   			if(xhr.status==200){
+	   			var result = decodeURIComponent(xhr.responseText);
+	   			alert(result);
+   			}else{
+   				document.getElementById("bd_div").innerHTML += xhr.responseText;
+   			}
+        }
+    }
+	xhr.open(method, url+params, aSync);//6
+	
+	1. public void doProcess(HttpServletResponse resq, String writeStr) throws IOException {
+	 에서 servlet에서 service를 거처 서버에서 바뀐 데이터들을 servlet의 (resq,result)들로 
+	2.doProcess에 대입해서out.print(writeStr)로 내보내면 
+	3.html의 ajax가 xhr.responseText로 그값을 받아서 result에 대입하고 그걸 gui에 구현한다.

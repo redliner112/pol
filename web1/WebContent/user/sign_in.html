@@ -22,10 +22,12 @@
 		var ids = idStr.split(",");// 배열화
 		var lengths = lengthStr.split(",");//배열화라고
 		var types = typeStr.split(",");//배열화라고!!!
+		
 		for (var i = 0; i < ids.length; i++) {
 			var maxLength = new Number(lengths[i]);//maxLength에 lengths[i]길이 숫자로 만들어서 입력
 			var typeVali = types[i];//types[i]의 배열들은 typeVail에 대입
 			var elObj = document.getElementById(ids[i]);//elObj에 idStr 하나씩 대입
+			
 			if (!isNaN(maxLength)) {//!isNaN으로 컬럼의길이 숫자면 뭐하란거지?<<<<<<<<<<<<<
 				if (elObj.value.length > maxLength) {
 					alert("제한길이를 넘었습니다.");
