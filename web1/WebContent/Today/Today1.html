@@ -5,19 +5,20 @@
 4.얼마나 많은 플랫폼(os)지원여부
 
 
-iot_test 데이터베이스에 모든권한을 주는 명령어
-grant all privileges 
-iot_test 데이터베이스에 모든권한을 뺏는 명령어
+#iot_Test 데이터 베이스의 모든 권한을 test@'%'에게 주겠다는 명령어
+grant all privileges on iot_test to test@'%';
+#iot_Test 데이터 베이스의 모든 권한을 주었던 test@'%'부터 모든 권한을 박탈하겠다는 명령어
+revoke all on iot_test from test@'%';
 
 
 iot_test의 사용중인 총용량을 구하는법.
 use information_schema;
-
 select (sum(data_length)+ sum(index_length))/1024/1024 from tables
 where table_schema = 'test';
 
+
 DBMS명	DBMS IP ADDRESS 	접속 네트워크 유형	PORT번호	데이터베이스명	계정명	비밀번호
-마리아db	내컴퓨터 ip주소					tcpip			80					3306			iot_test	1234
+마리아db	내컴퓨터 ip주소					tcpip			3306				iot_test		root		1234
 
 show variables where
 variable_name = 'version';
@@ -76,12 +77,6 @@ create procedure p_insert_user_info
 (in loop_cnt int(1),out result int)
 begin
 	declare i int  default 0;
-	declare exit handler for sqlexception
-		begin
-		 rollback;
-		 set result = -1;
-	end;
-	start transaction;
 	while(i<=loop.cnt)do
 		insert into user_info(id,pwd,name,age,class_num)
 		values(concat('test',i),concat('test',i),concat('test',i),i,i);

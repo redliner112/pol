@@ -18,15 +18,18 @@ public class UserService {
 		PreparedStatement ps = null;
 		try{
 			con = DBConn.getCon();
-			String sql = "insert into user_info(id, pwd,name,class_num,age)";
-			sql+= "values(?,?,?,?,?)";
+			String sql = "insert into user_info(userid, userpwd,username,address,age,hp1,hp2,hp3)";
+			sql+= "values(?,?,?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("id"));
-			ps.setString(2, hm.get("pwd"));
-			ps.setString(3, hm.get("name"));
-			ps.setString(4, hm.get("age"));
-			ps.setString(5, hm.get("class_num"));
+			ps.setString(1, hm.get("userid"));
+			ps.setString(2, hm.get("userpwd"));
+			ps.setString(3, hm.get("username"));
+			ps.setString(4, hm.get("address"));
+			ps.setString(5, hm.get("age"));
+			ps.setString(6, hm.get("hp1"));
+			ps.setString(7, hm.get("hp2"));
+			ps.setString(8, hm.get("hp3"));
 			int result = ps.executeUpdate();
 			if(result==1){
 				con.commit();
@@ -49,6 +52,33 @@ public class UserService {
 		}
 		return false;
 		
+	}
+	public String checkPwd(String pwd1,String pwd2){
+		if(pwd1.equals(pwd2)){
+			return"로그인성공";
+		}
+		return"비밀번호 틀렸어 임마!";
+	}
+	public String loginUser(HashMap<String,String>hm){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			con = DBConn.getCon();//1
+			
+			String sql = "select userpwd form user_info where userid=?";
+			ps = con.prepareStatement(sql);//2
+			
+			ps.setString(1, hm.get("userid"));
+			ResultSet rs = ps.executeQuery();//3
+			
+			while(rs.next()){
+				String userpwd = rs.getString("userpwd");
+				return checkPwd(userpwd,hm.get("userpwd"));//4
+			}
+		}catch(Exception e){//5 
+			//없는 이유가 데이터 타입이 없어서?
+		}
+		return "그딴아이디 없잖아";
 	}
 	public List<Map> selectUser(HashMap<String,String>hm){
 		Connection con = null;

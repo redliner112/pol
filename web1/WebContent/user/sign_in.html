@@ -4,39 +4,111 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script>
+	function getHttpXmlObj() {		 	
+		if (window.XMLHttpRequest) {		 // 크롬접속
+			return new XMLHttpRequest();
+		} else if (window.ActiveXObject) {		//익스 접속
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		alert("해당 브라우져가  Ajax를 지원하지 않습니다.");//나머지
+	}
+	function doSignin() {
+		var idStr = "userid,userpwd,username,address,age,hp1,hp2,hp3,command"//서버에 만든 테이블 구조
+		var lengthStr = "30,100,100,200,3,4,4,4,100";//테이블의 길이
+		var typeStr = "s,s,s,s,n,n";// s/n으로 String과 int나눔
+		var params = "?";//호출하겠다?정의해주겠다 로 ?중심으로 나뉜다.
+		
+		var ids = idStr.split(",");// 배열화
+		var lengths = lengthStr.split(",");//배열화라고
+		var types = typeStr.split(",");//배열화라고!!!
+		for (var i = 0; i < ids.length; i++) {
+			var maxLength = new Number(lengths[i]);//maxLength에 lengths[i]길이 숫자로 만들어서 입력
+			var typeVali = types[i];//types[i]의 배열들은 typeVail에 대입
+			var elObj = document.getElementById(ids[i]);//elObj에 idStr 하나씩 대입
+			if (!isNaN(maxLength)) {//!isNaN으로 컬럼의길이 숫자면 뭐하란거지?<<<<<<<<<<<<<
+				if (elObj.value.length > maxLength) {
+					alert("제한길이를 넘었습니다.");
+					elObj.value = ""; //빈문자열대입
+					elObj.focus();//포커스
+					return;//다시해 임마
+				}
+			}
+			if (typeVali == "n") {//typeVali을 String s와 int n으로 나눈것중 n만뽑고
+				if (isNaN(new Number(elObj.value))) { //Number로 elObj.value가 숫자인것만 숫자입력해준후 isNaN으로 숫자면 true 문자면 다시해임마!!
+					alert("숫자만 입력해주세요");
+					elObj.value = "";
+					elObj.focus();
+					return;
+				}
+			}
+			params += ids[i] + "=" + elObj.value + "&";//?=userid,userpwd,username,address,age,hp1,hp2,hp3,command=30,100,100,200,3,4,4,4,100& <==길이 만족한 것들만 이런식으로 뽑아낸후
+		}
+		var xhr = getHttpXmlObj();
+		var method = "get";
+		var url = "test.user";
+		var aSync = true;
+		xhr.onreadystatechange = function() {
+			if (xhr.readystate == 4) {
+				if (xhr.status == 200) {
+					var result = decodeURIComponent(xhr.responseText);
+					alert(result);
+				}
+			}
+		}
+		xhr.open(method, url + params, aSync);
+		if (method == "post") {
+			xhr.setRequestHeader("Content-type",
+					"application/x-www-form-urlencoded");
+		}
+		xhr.send();
+
+	}
+</script>
 <body>
-<form action="/test_web/sign.user">
-<div width="100%">
-<table border="1" cellspacing="0" cellpadding="0" width="400" align="center">
-<tr>
-	<td colspan="2"><p align="center"> = 회원 가입 = </p></td>
-</tr>
-<tr>
-	<td>id</td>
-	<td><input type="text" name="id" id="id"/></td>
-</tr>
-<tr>
-	<td>pwd</td>
-	<td><input type="text" name="pwd" id="pwd"/></td>
-</tr align="center">
-<tr>
-	<td>name</td>
-	<td><input type="text" name="name" id="name"/></td>
-</tr>
-<tr>
-	<td>class num</td>
-	<td><input type="text" name="class_num" id="class_num"/></td>
-</tr>
-<tr>
-	<td>age</td>
-	<td><input type="text" name="age" id="age"/></td>
-</tr>
-<tr>
-	<td colspan="2" align="center"><input type="submit" value="회원가입"/></td>
-</tr>
-</table>
-</div>
-<input type="hidden" name="command" id="command" value="SIGNIN"/>
-</form>
+	<div width="100%">
+		<table border="1" cellspacing="0" cellpadding="0" width="400"
+			align="center" />
+		<tr>
+			<td colspan="3"><p align="center">= 회원 가입 =</p></td>
+		</tr>
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="userid" id="userid" maxlength="30" /></td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td><input type="text" name="userpwd" id="userpwd"
+				maxlength="100" /></td>
+		</tr align="center">
+		<tr>
+			<td>이름</td>
+			<td><input type="text" name="username" id="username"
+				maxlength="100" /></td>
+		</tr>
+		<tr>
+			<td>주소</td>
+			<td><input type="text" name="address" id="address" size="35"
+				maxlength="200" /></td>
+		</tr>
+		<tr>
+			<td>나이</td>
+			<td><input type="text" name="age" id="age" maxlength="3" /></td>
+		</tr>
+		<tr>
+			<td>휴대폰번호</td>
+			<td><input type="text" name="hp1" id="hp1" size="4"
+				maxlength="4" />-<input type="text" name="hp2" id="hp2" size="4"
+				maxlength="4" />-<input type="text" name="hp3" id="hp3" size="4"
+				maxlength="4" /></td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center"><input type="button" value="회원가입"
+				onclick="doSignin()" /></td>
+		</tr>
+		</table>
+	</div>
+	<input type="hidden" name="command" id="command" value="SIGNIN" />
+	</form>
 </body>
 </html>

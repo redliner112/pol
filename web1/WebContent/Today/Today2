@@ -1,0 +1,20 @@
+1.form태그는 서버에 요청만 하고 받는건 webbrawser가 받는다.
+2.form태그는 무조건 서버의 요청이 올때까지 기다려야한다.(페이지의 서버와 동기화)
+
+				Ajax
+서버로 보냈으면 받을수있는 객체가 있다는것.(xmlhttp오브젝트 객체.)
+
+var AjaxUttil = function(){}으로도 정의가능.
+
+자바스크립트에서 public private 처럼 쓸수있는 방법
+		- function 안에 
+		var str  <==private 와 같은역활
+		this.str2 <== public 과같은역활
+
+MVC패턴
+	M odel = service, DB
+	V iew =HTML,JSP
+	C ontroler = servlet	
+
+	readystate 5개의 값을가짐 4일때 complit됨
+	xmlhttpObj.status 	많지만 200일때 complit됨
