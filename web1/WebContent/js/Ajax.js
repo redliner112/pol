@@ -1,48 +1,36 @@
 /**
  * 
  */
-//var AjaxUtil = function() {
-//	var str = "문자겠지";
-//	this.str2 = "나도문잔데";
-//
-//	this.alertVar = function() {
-//		alert(str);
-//		alert(this.str2);
-//	}
-//	this.getStr = function() {
-//		return this.str2;
-//	}
-//
-//}
-//var au = new AjaxUtil();
-//alert(au.getStr());
-var str = "name,id,pwd";
-var strs = str.split(",");
 
-for(var i=0;i<strs.length;i++){
-	var value = document.getElementById(strs[i]).value;
-	param += "&" + strs[i] + "=" + value;
-}
-var au = new AjaxUtil("/login.action","name,id,pwd");
-var AjaxUtil = function(url,arrParams,method,aSync){
-	this.fAction = url;
-	var fMethod = method ? method :"get";
-	var params = "?action =LOGIN&id=" + encodeURIComponent(userid);
-	this.fASync = aSync ? aSync : true; 
-	xmlHttpObj.onreadystatechange = function(){
-		if(xmlHttpObj.readyState==4 && xmlHttpObj.status==200){
-			var result  = decodeURIComponent(xmlHttpObj.responseText);
-			if(result == "success"){
-				location.herf = "../user/welcome.jsp"
-			}else{
-				alert(result);
+var AjaxUtil = function(params) {
+	this.params = params;
+
+	getHttpXmlObj = function() {
+		if (window.XMLHttpRequest) {// 크롬일때
+			return new XMLHttpRequest();
+		} else if (window.ActiveXObjec) {
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		alert("해당 브라우저가 ajaxt를 지원하지 않습니다.");
+	}
+	this.xhr = getHttpXmlObj();
+		var method = "get";
+		var url = "test.user";
+		var aSync = true;
+		this.xhr.onreadystatechange=function(){
+			if(this.readyState==4){
+				if(this.status==200){
+					var result = decodeURIComponent(this.responseText);
+					alert(result);
+				}
 			}
 		}
-	}
-	xmlHttpObj.open(method,url+params,sync);
-	if(method=="post"){
-		xmlHttpObj.setRequestHeader("content-type","application/x-www-form-urlencoded");
-		
-	}
-	xmlHttpObj.send(params);
+		this.changeCallBack = function(func){
+			this.xhr.onreadystatechang = func;
+		}
+		this.xhr.open(method,url + params,aSync);
+		this.send= function (){
+			this.xhr.sendarguments = this;
+			this.xhr.send();
+		}
 }

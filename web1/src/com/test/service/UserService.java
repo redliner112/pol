@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.test.common.DBConn;
+import com.test.dto.User_Info;
 
 public class UserService {
 
-	public boolean InsertUser(HashMap<String, String> hm)  {
+	public boolean insertUser(User_Info ui)  {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
@@ -22,14 +23,14 @@ public class UserService {
 			sql+= "values(?,?,?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("userid"));
-			ps.setString(2, hm.get("userpwd"));
-			ps.setString(3, hm.get("username"));
-			ps.setString(4, hm.get("address"));
-			ps.setString(5, hm.get("age"));
-			ps.setString(6, hm.get("hp1"));
-			ps.setString(7, hm.get("hp2"));
-			ps.setString(8, hm.get("hp3"));
+			ps.setString(1, ui.getUserId());
+			ps.setString(2, ui.getUserPwd());
+			ps.setString(3, ui.getUserName());
+			ps.setString(4, ui.getAddress());
+			ps.setInt(5, ui.getAge());
+			ps.setString(6, ui.getHp1());
+			ps.setString(7, ui.getHp2());
+			ps.setString(8, ui.getHp3());
 			int result = ps.executeUpdate();
 			if(result==1){
 				con.commit();
@@ -59,7 +60,7 @@ public class UserService {
 		}
 		return"비밀번호 틀렸어 임마!";
 	}
-	public String loginUser(HashMap<String,String>hm){
+	public String loginUser(User_Info ui){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
@@ -68,37 +69,45 @@ public class UserService {
 			String sql = "select userpwd form user_info where userid=?";
 			ps = con.prepareStatement(sql);//2
 			
-			ps.setString(1, hm.get("userid"));
+			ps.setString(1, ui.getUserId());
 			ResultSet rs = ps.executeQuery();//3
 			
 			while(rs.next()){
 				String userpwd = rs.getString("userpwd");
-				return checkPwd(userpwd,hm.get("userpwd"));//4
+				return checkPwd(userpwd,ui.getUserPwd());//4
 			}
 		}catch(Exception e){//5 
 			//없는 이유가 데이터 타입이 없어서?
 		}
 		return "그딴아이디 없잖아";
 	}
-	public List<Map> selectUser(HashMap<String,String>hm){
+	public List<Map> selectUser(User_Info ui){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
 			String sql = "select user_num, user_id,user_pwd,user_name,class_num form user_info";
-			if(hm.get("name")!=null){
-				sql +=" where user_name like ?";	
+			if(ui.getUserName()!=null && !ui.getUserName().equals("")){
+				sql +=" where username like ?";	
 			}
 			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
-			if(hm.get("name")!=null){
-				ps.setString(1, hm.get("name"));
+			if(ui.getUserName()!=null &&!ui.getUserName().equals("")){
+				ps.setString(1, ui.getUserName());
 			}
 			ResultSet rs = ps.executeQuery();
 			List userList = new ArrayList();
 			while(rs.next()){
-				HashMap hm1 = new HashMap();
-				hm1.put("user_name", rs.getString("user_name"));
-				userList.add(hm1);
+				User_Info ui2 = new User_Info();
+				ui2.setUserNum(rs.getInt("usernum"));
+				ui2.setUserId(rs.getString("userid"));
+				ui2.setUserPwd(rs.getString("userpwd"));
+				ui2.setUserName(rs.getString("username"));
+				ui2.setAddress(rs.getString("address"));
+				ui2.setHp1(rs.getString("hp1"));
+				ui2.setHp2(rs.getString("hp2"));
+				ui2.setHp3(rs.getString("hp3"));
+				ui2.setAge(rs.getInt("age"));
+				userList.add(ui2);
 			}
 			return userList;
 		}catch(Exception e){
@@ -112,6 +121,73 @@ public class UserService {
 			}
 		}
 		return null;
+	}
+	public boolean deleteUser(HashMap<String,String>hm) throws Exception{
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			con = DBConn.getCon();
+			String sql = "delete form user_info";
+			sql+=" where user_num=?";
+			
+			ps = con.prepareStatement(sql);
+			ps.setString(1, hm.get("user_num"));
+			int result = ps.executeUpdate();
+			if(result==1){
+				con.commit();
+				return true;
+			}
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				ps.close();
+				DBConn.closeCon();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public boolean updateUser(User_Info ui){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = DBConn.getCon();
+			String sql = "update user_info ";
+			sql += " set userid=?,";
+			sql += " username=?,";
+			sql += " age=?";
+			sql += " where usernum=?";
+			
+			ps = con.prepareStatement(sql);
+			ps.setString(1, ui.getUserId());
+			ps.setString(2, ui.getUserName());
+			ps.setInt(3, ui.getAge());
+			ps.setInt(4, ui.getUserNum());
+			int result = ps.executeUpdate();
+			if(result==1){
+				con.commit();
+				return true;
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 }
 

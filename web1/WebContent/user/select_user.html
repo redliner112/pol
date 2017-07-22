@@ -5,14 +5,7 @@
 <title>Insert title here</title>
 </head>
 <script>
-function getHttpXmlObj(){
-	if(window.XMLHttpRequest){
-  		return new XMLHttpRequest();
- 	}else if(window.ActiveXObject){
-  		return new ActiveXObject("Microsoft.XMLHTTP");
- 	}
-	alert("해당 브라우져가  Ajax를 지원하지 않습니다.");
-}
+
 function doSelect(){
 	var idStr = "username,command";
 	var lengthStr = "30,100";
@@ -43,53 +36,57 @@ function doSelect(){
 			
 		params +=ids[i] +"=" + elObj.value + "&";
 	}
-	var xhr = getHttpXmlObj();
-	var method = "get";
-	var url = "test.user";
-	var aSync = true;
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState==4){
-			if(xhr.status==200){
-				var result = decodeURIComponent(xhr.response.Text);//response 서버에서 온 응답?
+	var au = new AjaxUtil(params);
+	au.changeCallBack(function(){
+		if(au.xhr.readyState==4){
+			if(au.xhr.status==200){
+				var result= decodeURIComponent(au.xhr.responseText);
 				var rows = result.split("{+}");
-				var tableStr = "<table border = '1'>";
-				for(var i = 0;i<rows.length;i++)){
+				var thdEnables = rows[1].split("{/}");
+				var tableStr = "<table border='1'>";
+				
+				for(var i=0;i<rows.length;i++){
+					if(i==1){
+						continue;//뭐지?첫번재 컬럼값이라서 넘값이라서 넘어간다는소리인가?
+					}
 					tableStr +="<tr>";
 					var columns = rows[i].split("{/}");
+					var userNum;
 					for(var j=0;j<columns.length;j++){
-						if(i==0){
-							tableStr +="<td>" + columns[j] + "</td>"
+						if(j==0){
+							userNum = columns[j];
+						}
+						if(i==0){//이 두 if가 이해가 잘안됨.
+							tableStr +="<td>"+columns[j] + "</td>";
 						}else{
-							tableStr +="<td><input type = 'text' value ='" + columns[j] + "'/></td>"
+							if(tdEnables[j]=="en"){
+								tableStr += "<td><input type = 'text' value='" + columns[j] + "'id='r"+userNum+j+"'/></td>";
+							}else{
+								tableStr +="<td>" + columns[j] +"</td>";
+							}
 						}
 					}
 					if(i==0){
 						tableStr +="<td>삭제</td>";
 						tableStr +="<td>수정</td>";
 					}else{
-						tableStr +="<td><input type = 'button' value = '삭제'/></td>";
-						tableStr +="<td><input type = 'button' value = '수정'/></td>";
+						tableStr +="<td><input type = 'button' value = '삭제' onclick='doDelete("+userNum+")'></td>";
+						tableStr +="<td><input type = 'button' value = '수정' onclick='doUpdate("+userNum +")'/></td>";
 					}
 					tableStr +="</tr>";
 				}
-				if(row.length==1){
-					tableStr +="<tr><td colspan = '3'>니거 검색한거 없어 임마</td></tr>";
+				if(rows.length==1){//rows.length==1이란건 컬럼명값일떄?
+					tableStr +="<tr><tdcolspan='3'>니가 검색한거 없어</td></tr>";
 				}
 				tableStr +="</table>";
-				document.getElementById("bd_div").innerHTML +=tableStr;
-				alert(result);
+				document.getElementById("bd_div").innerHTML = tableStr;
 			}else{
-				document.getElementById("by_div").innerHTML +=xhr.responseText;
+				document.getElementById("bd_div").innerHTML = xhr.responseText;
 			}
 		}
-	}
-	xhr.open(method,url+params,aSync);
-	if(method=="post"){
-		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	}
-	xhr.send();
-}
-	
+	});
+	au.send();
+}		
 	
 </script>
 <body>

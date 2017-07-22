@@ -5,10 +5,110 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/test_web/sign.user">
-지울 유저 번호 : <input type="text" name="user_num" id="user_num"/></br>
-<input type="submit" value="삭제"/>
-<input type="hidden" name="command" id="command" value="DELETE"/>
-</form>
+	<script>
+function getHttpXmlObj(){
+	if(window.XMLHttprequest){
+		return new XMLHttpRequest();
+	}else if(window.ActiveXObject){
+		return new ActiveObject("Microsoft.XMLHTTP");
+	}
+	alert("해당브라우ㅈ가 Ajax를 지원하지 않습니다.")
+}
+function doDelete(userNum){
+	var isDelete = confirm(userNum + "을 삭제할라고?");
+	alert(isDelete);
+}
+function doSelect(){
+	var idStr = "username,command";
+	var lengthStr = "30,100";
+	var typeStr = "s,s";
+	
+	var params = "?";
+	var ids = idStr.split(",");
+	var lengths = lengthStr.split(",");
+	var types = typeStr.split(",");
+	
+	for(var i = 0;i<ids.length;i++){
+		var maxLength = new Number(lengths[i]);
+		var typeVali = type[i];
+		var elObj = document.getElementById(ids[i]);
+		if(!isNaN(maxLength)){
+			if(elObj.value.length>maxLength){
+				alert("제한길이를 넘었습니다. 확인해주세요");
+				elObj.value = "";
+				elObj.focus();
+				return;
+			}
+		}
+		
+		params +=ids[i] +"=" + elObj.value + "&";
+	}
+	var xhr =getHttpXmlObj();
+	var method = "get";
+	var url = "test.user";
+	var aSync = true;
+	
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4){
+			if(xhr.status==200){
+		qvar result = decodeURIComponent(xhr.reponseText)
+		var rows = result.split("{+}");
+		var tdEnables = rews[1].split("{/}");
+		
+		var tableStr = "<table border = '1'>";
+		for(var i=0;i<rows.length;i++){
+			if(i==1){
+				continue;//뭐지?
+			}
+			tableStr +="<tr>";
+			var columns = rows[i].split("{/}");//이해가 안간다.
+			var userNum;
+			
+			for(var j=0;j<columns.length;j++){
+				if(j==0){
+					userNum = columns[j];//userNum에 columns[j]를 넣고, columns에 row[i].split("{/}")를 넣으면 어떻게 되는거지?
+				}
+				if(i==0){
+					tableStr +="<td>" + columns[j] + "</td>";
+				}else{
+					if(tdEnables[j]=="en"){
+						tableStr +="<td><input type = 'text' value ='" + columns[j] + "'/></td>";
+					}else{
+						tableStr +="<td>" + columns[j] + "</td>";
+					}
+				}
+			}
+			if(i==0){
+				tableStr +="<td>삭제</td>";
+				tableStr +="<td>수정</td>";
+			}else{
+				tableStr +="<td><input type = 'button' value = '삭제' onclick = 'doDelete(" + userNum + ")'/></td>";
+				tableStr +="<td><input type='button' value='수정'/></td>";
+			}
+			tableStr +="</tr>";
+		}
+		if(rows.length ==1){
+			tableStr +="<tr><td colspan = '3' 니가 검색한건 없어 임마</td></tr>";
+		}
+		tableStr +="</table>";
+		document.getElementById("bd_div").innerHTML +=tableStr;
+	}else{
+		document.getElementById("bd_div").innerHTML +=xhr.responseText;
+	}
+	}
+}
+xhr.open(method,url+params,aSync);
+if(method=="post"){
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+}
+xhr.send();
+}
+</script>
+	유저이름검색:
+	<input type="text" name="userid" id="userid" />
+	<input type="button" value="검색" onclick="doSeclct()" />
+	</br>
+	<input type="hidden" name="command" id="command" value="SELECT" />
+	</form>
 </body>
 </html>
