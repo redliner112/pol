@@ -8,7 +8,7 @@ public class DBConn {
 
 	private static Connection con;
 
-	public static Connection getCon() throws Exception{
+	public static Connection getCon() throws ClassNotFoundException, SQLException {
 		if (con == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/iot", "root", "Slalfkf11!");

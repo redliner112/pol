@@ -81,11 +81,11 @@ public class UserService {
 		}
 		return "그딴아이디 없잖아";
 	}
-	public List<Map> selectUser(User_Info ui){
+	public List<User_Info> selectUser(User_Info ui){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
-			String sql = "select user_num, user_id,user_pwd,user_name,class_num form user_info";
+			String sql = "select usernum,userid,username,age,address,hp1,hp2,hp3,userpwd form user_info";
 			if(ui.getUserName()!=null && !ui.getUserName().equals("")){
 				sql +=" where username like ?";	
 			}
@@ -100,29 +100,31 @@ public class UserService {
 				User_Info ui2 = new User_Info();
 				ui2.setUserNum(rs.getInt("usernum"));
 				ui2.setUserId(rs.getString("userid"));
-				ui2.setUserPwd(rs.getString("userpwd"));
 				ui2.setUserName(rs.getString("username"));
 				ui2.setAddress(rs.getString("address"));
 				ui2.setHp1(rs.getString("hp1"));
 				ui2.setHp2(rs.getString("hp2"));
 				ui2.setHp3(rs.getString("hp3"));
 				ui2.setAge(rs.getInt("age"));
+				ui2.setUserPwd(rs.getString("userpwd"));
 				userList.add(ui2);
 			}
 			return userList;
-		}catch(Exception e){
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 			try{
 				ps.close();
 				DBConn.closeCon();
-			}catch(Exception e){
+			}catch(SQLException e){
 				e.printStackTrace();
 			}
 		}
 		return null;
 	}
-	public boolean deleteUser(HashMap<String,String>hm) throws Exception{
+	public boolean deleteUser(User_Info ui) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
@@ -131,7 +133,7 @@ public class UserService {
 			sql+=" where user_num=?";
 			
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("user_num"));
+			ps.setInt(1, ui.getUserNum());
 			int result = ps.executeUpdate();
 			if(result==1){
 				con.commit();

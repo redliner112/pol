@@ -17,6 +17,7 @@ var AjaxUtil = function(params) {
 		var method = "get";
 		var url = "test.user";
 		var aSync = true;
+		
 		this.xhr.onreadystatechange=function(){
 			if(this.readyState==4){
 				if(this.status==200){

@@ -47,8 +47,6 @@ function doLogin(){
 		
 		params += ids[i]+"="+ elObj.value +"&";//5
 	}
-	return;  //5 dologin에 함?
-	
 	var xhr = getHttpXmlObj();
 	var method = "get";
 	var url = "test.user";
@@ -65,6 +63,8 @@ function doLogin(){
         }
     }
 	xhr.open(method, url+params, aSync);//6
+	
+	alert("로그인 완료");
 	
    	if(method=="post"){
    		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
