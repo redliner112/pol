@@ -84,11 +84,13 @@ public class UserService {
 	public List<User_Info> selectUser(User_Info ui){
 		Connection con = null;
 		PreparedStatement ps = null;
+		
 		try{
 			String sql = "select usernum,userid,username,age,address,hp1,hp2,hp3,userpwd form user_info";
 			if(ui.getUserName()!=null && !ui.getUserName().equals("")){
 				sql +=" where username like ?";	
 			}
+			
 			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
 			if(ui.getUserName()!=null &&!ui.getUserName().equals("")){
@@ -96,6 +98,7 @@ public class UserService {
 			}
 			ResultSet rs = ps.executeQuery();
 			List userList = new ArrayList();
+			
 			while(rs.next()){
 				User_Info ui2 = new User_Info();
 				ui2.setUserNum(rs.getInt("usernum"));
@@ -110,6 +113,7 @@ public class UserService {
 				userList.add(ui2);
 			}
 			return userList;
+			
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

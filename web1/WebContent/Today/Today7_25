@@ -1,0 +1,57 @@
+인클루드
+jsp에서는 jsp파일을 쓰게되면 무조건 안에있는 코드가 다른곳에 똑같이 삽입된다.
+html파일내용자체가 jsp안에들어가는것.
+보통 common안의 header파일안에있따.
+<%@include file = "/common/header.jsp" %> 가 다른점은
+파일소스를 넣어놓고 그대로 컴파일한다.
+자주하는 실수가 헤더파일을 안보고 작성하고 똑같은 헤더파일을 또작성한다. 
+헤더와 커먼파일은 어떻게 되어있는지 찾아보는편이 좋다.
+만약 시간을 알아보고싶다면 javascript보단 jsp에 넣는게좋다.
+javascript 는 사용자의 시간이고 jsp는 서버의 시간이라서.
+
+alert("<%=toDateStr%>"); jsp태그
+out.println의 압축버전이라고 생각하면됨.
+
+$() 셀렉터 html에서의 가지고싶은 객체를 안에다 써주면 찾을수있따.
+$(bottun)
+$(div.first)div. 의 first를 찾아온다.
+
+jquery.com 접속후 다운로드 들어감.
+
+Download the compressed, production jQuery 3.2.1 한줄버전.
+Download the uncompressed, development jQuery 3.2.1이걸로~
+복사해서 우리가 만든 js폴더에 붙여넣기하면된다.
+
+정규표현식으로 검색하는게 좋다.(가르칠 자신이 없으시다.)
+prototype 방식
+무료제이쿼리
+유료 dhdjms등?
+일반적으로 그냥다 자바스크립트다.(라이브러리~)
+이걸 사용하면 간단하게 사용할수있다.
+
+contest Path contestPath를 수정하는 객체.
+rootPath가 바뀌더라도 더이상 소스를 수정할필요가 없다.
+server의 server.xml의
+<Context docBase="web1" path="/web1" reloadable="true" source="org.eclipse.jst.jee.server:web1"/></Host>
+에서docbase =프로젝트 이름(input에서 id역활 찾을수있는 역활)
+path =  web1 add하면 바로 web1로 가게하는것.(url에서 쓰는 가상경로)
+web1의 webContent를 바라보는것.
+String rootPath = request.getContextPath(); url에서 바라보는 root디렉토리를 가져온것.
+
+<%!  %>이안에는 함수를 넣을수있따.
+정확하겐 <% %>는 함수안에다 쓰는거라 불가능하지만 <%!  %>는함수밖에다가 쓴다는것이라 가능하다.
+
+요청받는 객체 request (Http servlet request(req)
+응답받는 객체 response (Http servlet response(resq)
+jsp는 파일 전체가 함수다.(심지어 include된것조차도)
+
+HTML과 jsp를 비교할땐 jsp가 최상위이다. 그래서 둘이 합쳐져 있어도 jsp에 스크립트와 HTML이 끼어있을뿐이다.
+
+String rootPath = request.getContextPath();
+rootpsth는 그냥 변수이고, request.getContextPath();에서 
+.getContextPath();는 톰캣에서 자동으로 server.xml에있는 path를 바라보게 해준다.
+그래서 roopPath변수를 선언한후 
+var rootPath ="<%=rootPath%>";에서<%= %>안에넣어서  rootPath만 쓰게되면
+바로 출력하게 만들어서 다른 url앞에 붙여서 server안의 path를 자동으로쓰게만든다.
+그래야 이름이 바껴도 하나하나 수정할 피요없이 server안에있는 parth만 바꾸게되면 
+다바뀌는것이다.

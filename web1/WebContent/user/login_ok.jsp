@@ -28,6 +28,7 @@ if (id != null && pwd != null) {
 		ps = con.prepareStatement(sql);
 		ps.setString(1, ui.getUserId());
 		ResultSet rs = ps.executeQuery();
+		
 		while (rs.next()) {
 			String userPwd = rs.getString("userpwd");//3.rs.next를 userpwd로 돌려서 rs.getString으로 원하는 값을 불러온후
 			String userName = rs.getString("userName");
@@ -37,6 +38,7 @@ if (id != null && pwd != null) {
 			String hp2 = rs.getString("hp2");
 			String hp3 = rs.getString("hp3");
 			if (userPwd.equals(ui.getUserPwd())) {//dto의 저장된 getUserPwd가 서버의 userpwd와 같으면 성공
+				
 				result = "로그인성공";
 				session.setAttribute("userid",ui.getUserId());
 				session.setAttribute("username",userName);
@@ -45,6 +47,7 @@ if (id != null && pwd != null) {
 				session.setAttribute("hp1",hp1);
 				session.setAttribute("hp2",hp2);
 				session.setAttribute("hp3",hp3);
+				
 			} else {
 				result = "비밀번호 틀렸어 임마!";//틀리면 실패
 			}
@@ -59,13 +62,13 @@ if (id != null && pwd != null) {
 	out.println(result);
 }else{
 			//세션초기화
+			result = "로그아웃 되셨습니다.";
 	session.invalidate();  //invalidate??
 }
 		
  %>
 <script>
-var result = "<%=result%>";
-alert(result);
+alert(<%=result%>);
 location.href = "/user/login.jsp"
 </script>
 </body>
