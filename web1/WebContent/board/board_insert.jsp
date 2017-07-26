@@ -1,37 +1,18 @@
 <%@ include file="/common/header.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시판 입력</title>
-</head>
-<script>
-function checkValue(){
-	var titleObj = document.getElementById("title");
-	if(titleObj.value.trim()==""){
-		alert("제목 입력안해!! 죽어!!")
-		return false;
-	}
-	var contentObj = document.getElementById("content");
-	if(contentObj.value.trim()==""){
-		alert("내용 입력안해!! 죽어!!")
-		return false;
-	}
-	var userNumObj = document.getElementById("user_num");
-	var userNum = parseInt(userNumObj.value);
-	if(isNaN(userNum)){
-		alert("숫자 입력하라고!!!!");
-		return false;
-	}
-	return true; 
-}
-</script>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="com.test.common.DBConn" %>
+<%@ page import="com.test.dto.BoardInfo" %>
+<%@ page import="com.test.dto.User_Info" %>
 <body>
-<form method="get" action="*.board" onsubmit="return checkValue()">
-제목 : <input type="text" name="title" id="title"/><br/>
-내용 : <textarea name="content" id="content"></textarea><br/>
-글쓴이 : <input type="text" name="user_num" id="user_num"/><br/>
-<input type="submit" value="글쓰기"/>
+<form action="<%=rootPath%>/board/board_insert_ok.jsp">
+제목 : <input type="text" name="bititle"/><br/>
+ 내용: <textarea name="bicontent" ></textarea><br/>
+ id : <input type="text" name="creusr"/><br/>
+ 비밀번호 : <input type="text" name="bipwd"/><br/>
+	<input type="submit" value="작성완료"/>
+	<input type="button" value="게시판가기" onclick="doMovePage('board')"/>
 </form>
 </body>
 </html>

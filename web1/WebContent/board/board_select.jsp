@@ -33,18 +33,26 @@
 		 tableStr +="<td>" + rs.getInt("binum") + "</td>";
 		 tableStr +="<td>" + rs.getString("bititle") + "</td>";
 		 tableStr +="<td>" + rs.getString("bicontent") + "</td>";
-		 tableStr +="<td>" + rs.getString("bitpwd") + "</td>";
+		 tableStr +="<td>" + rs.getString("bipwd") + "</td>";
 		 tableStr +="<td>" + rs.getString("creusr") + "</td>";
 		 tableStr +="<td>" + rs.getString("credat") + "</td>";
 		 tableStr +="</tr>";
 	 }
+	 
 	 tableStr +="</table>";
 	 out.println(tableStr);
  }catch(Exception e){
 	 System.out.println(e);
+ }finally{
+	 if(ps!=null){
+		 ps.close();
+		 ps = null;
+	 }
+	 DBConn.closeCon();
  }
  %>
- <input type = "button" value = "게시글작성"/>
+ <input type = "button" value = "게시글작성" onclick = "doMovePage('insert')"/>
  <input type = "button" value = "메인가기" onclick="doMovePage('main')"/>
+
 </body>
 </html>

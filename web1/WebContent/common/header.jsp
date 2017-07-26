@@ -37,16 +37,18 @@ Date toDate = new Date();
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss");
 String toDateStr = sdf.format(toDate);
 %>
-<script src ="<%=rootPath%>js/jquery-3.2.1.js"></script>
+<script src ="<%=rootPath%>/js/jquery-3.2.1.js"></script>
 <script>
 var rootPath ="<%=rootPath%>";
 
 function doMovePage(pageId){
 	var url="";
-	if(pageId = "board"){
-		url =rootPath +  "/board/board_select.jsp"
+	if(pageId == "board"){
+		url =rootPath +  "/board/board_select.jsp";
 	}else if(pageId=="main"){
 		url = rootPath + "/";
+	}else if(pageId=="insert"){
+		url =rootPath +  "/board/board_insert.jsp";
 	}
 	location.href = url;
 }
