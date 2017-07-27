@@ -44,10 +44,10 @@ try{
 
 
 %>
-<script>
+<script> 
 alert("<%=result%>");
 if(<%=resultNum%>==1){
-	locateion.hef="<%=rootPath%>/board/board_select.jsp";
+	location.href="<%=rootPath%>/board/board_select.jsp";
 }else{
 	history.back();
 }

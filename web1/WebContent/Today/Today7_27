@@ -1,0 +1,4 @@
+defaultUrl 
+response.sendRedirect(defaultUrl);이주소로 자동으로 이동.
+defaultUrl = rootPath + "/user/login.jsp?init=1";   ?init=1최초 한번만 동작하게만듬 중요함.
+만약 init=1아니게되면 null인지 아닌지 판단여부를 하게되서 무한으로 "/user/login.jsp 안가게된다.

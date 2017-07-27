@@ -43,6 +43,12 @@
 		out.println(tableStr);
 	}catch(Exception e){
 		System.out.println(e);
+	}finally{
+		if(ps!=null){
+			ps.close();
+			ps = null;
+		}
+		DBConn.closeCon();
 	}
 	%>
 	<input type="button" value="게시글 작성" onclick="doMovePage('insert')"/>
