@@ -51,9 +51,6 @@
 		DBConn.closeCon();
 	}
 	%>
-	<jsp:include page="/common/top.jsp" flush="fasle">
- 	<jsp:param name="login" value="<%=login %>"></jsp:param>
-</jsp:include>
 	<input type="button" value="게시글 작성" onclick="doMovePage('insert')"/>
 	<input type="button" value="메인가기" onclick="doMovePage('main')"/>
 </body>
