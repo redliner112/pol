@@ -6,13 +6,40 @@
 <%@ page import="com.test.dto.BoardInfo" %>
 <%@ page import="com.test.dto.User_Info" %>
 <body>
+<jsp:include page="/common/top.jsp" flush="fasle">
+ 	<jsp:param name="login" value="<%=login %>"></jsp:param>
+</jsp:include>
+
+</script>
+
 <form action="<%=rootPath%>/board/board_insert_ok.jsp">
-제목 : <input type="text" name="bititle"/><br/>
- 내용: <textarea name="bicontent" ></textarea><br/>
- id : <input type="text" name="creusr"/><br/>
- 비밀번호 : <input type="text" name="bipwd"/><br/>
+    <div class="container">
+      <div class="starter-template">
+<table class = "table">
+<tr>
+<td>제목 :</td>
+<td><input type="text" name="bititle"/></td>
+</tr>
+<tr>
+<td> 내용: </td>
+<td><textarea name="bicontent" /></textarea></td>
+</tr>
+<tr>
+<td>  id : </td>
+<td><input type="text" name="creusr"/></td>
+</tr>
+<tr>
+<td>  비밀번호 : </td>
+<td><input type="text" name="bipwd"/></td>
+</tr>
+<tr>
+<td colspan="2">
 	<input type="submit" value="작성완료"/>
 	<input type="button" value="게시판가기" onclick="doMovePage('board')"/>
+</td>
+	</table>
+	</div>
+</div>
 </form>
 </body>
 </html>

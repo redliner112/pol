@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 <body>
 <%
 int pBinum = Integer.parseInt(request.getParameter("binum"));
@@ -29,6 +30,7 @@ try{
 	rs.last();
 	int rowCnt = rs.getRow();
 	if(rowCnt ==0){
+		
 %>
 			<script>
 				alert("<%=pBinum%>번 게시물은 이미 지워졌습니다.");
@@ -36,6 +38,7 @@ try{
 			</script>
 <%
 	}
+	
 	rs.beforeFirst();
 	while(rs.next()){
 		binum = rs.getInt("binum");
@@ -53,16 +56,47 @@ try{
 	}
 	DBConn.closeCon();
 }
-%>
-번호:<%=binum %><br/>
-제목:<%=bititle %><br/>
-내용:<%=bicontent %><br/>
-글쓴이:<%=creusr %><br/>
-생성일자:<%=credat %><br/>
-비밀번호:<input type = "password" name = "bipwd" id = "bipwd"/><br/>
+%> 
+<jsp:include page="/common/top.jsp" flush="fasle">
+ 	<jsp:param name="login" value="<%=login %>"></jsp:param>
+</jsp:include>
+ <div class="container">
+      <div class="starter-template">
+<table class='table table-bordered table-hover'>
+<tr>
+<td>번호 :</td>
+<td><%=binum %></td>
+</tr>
+<tr>
+<td>제목 :</td>
+<td><%=bititle %></td>
+</tr>
+<tr>
+<td>내용 :</td>
+<td><%=bicontent %></td>
+</tr>
+<tr>
+<td>글쓴이: </td>
+<td><%=creusr %></td>
+</tr>
+<tr>
+<td>생성일자 :</td>
+<td><%=credat %></td>
+</tr>
+<tr>
+<td>비밀번호 :</td>
+<td><input type = "password" name = "bipwd" id = "bipwd"/></td>
+</tr>
+<tr>
+<td colspan="2">
 <input type = "button" value = "수정" onclick = "modifyBoard()"/>
 <input type = "button" value = "삭제" onclick = "deleteBoard()"/>
 <input type="button" value="게시판가기" onclick="doMovePage('board')"/>
+</td>
+</tr>
+</table>
+</div>
+</div>
 <script>
 function modifyBoard(){
 	var bipwd = document.getElementById("bipwd").value;
@@ -71,7 +105,8 @@ function modifyBoard(){
 function deleteBoard(){
 	var bipwd = document.getElementById("bipwd").value;
 	location.href="<%=rootPath%>/board/board_delete.jsp?binum=<%=binum%>&bipwd=" + bipwd; 
-}
+}	
+
 </script>
 </body>
 </html>
