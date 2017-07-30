@@ -23,24 +23,15 @@ body {
         <label for="inputPassword" class="sr-only">Password</label>
      
         <input type="password" name="pwd" id = "pwd"class="form-control" placeholder="Password" required>
-        
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
         
-        <button class="btn btn-lg btn-primary btn-block" type="button">Login in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login in</button>
       </form>
 
     </div> <!-- /container -->
-    <script>
-    	$("button").click(function(){
-    		alert(1);
-    	});
-    	$("#btn2").click(function(){
-    		alert(2);
-    	});
-    </script>
 </body>
 </html>

@@ -3,18 +3,21 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.test.common.DBConn" %>
 <%@ page import="com.test.dto.User_Info" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
+
+<%
+String rootPath = request.getContextPath();
+%>
+<script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
+<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css"/>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css"/>
 <body>
 <%
 String id = request.getParameter("id");
 String pwd = request.getParameter("pwd");
 
 String result = "";
+String url ="board/board_select.jsp";
 if(id!=null && pwd!=null){
 	User_Info ui = new User_Info();
 	ui.setUserId(id);
@@ -68,9 +71,30 @@ if(id!=null && pwd!=null){
 	session.invalidate();
 }
 %>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">로그인 여부</h4>
+        </div>
+        <div class="modal-body">
+          <p><%=result%></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <script>
-alert("<%=result%>");
-location.href="/user/login.jsp";
+$("#myModal").modal();
+$("#myModal").on("hidden.bs.modal", function () {
+	location.href="<%=url%>";
+});
 </script>
 </body>
 </html>
