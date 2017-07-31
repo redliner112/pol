@@ -4,6 +4,11 @@
     <%@ page import="java.sql.*"%>
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.BoardInfo"%>
+<style>
+body {
+  background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
+}
+</style>
 <body>
 <jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
 <script>

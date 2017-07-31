@@ -1,0 +1,68 @@
+셀렉터
+1.마치 문장처럼 쓸수있다.
+ form-signin input[type="text"] { 처럼 한칸 띄어져 있따면 자식처럼 쓸수있다.(extends)
+2.button.btn  .btn이라면 class가 btn일때만 실행된다는것이다. 
+허트리뷰트.attr("action")실제로 가지고있는 "action" 값이 나온다.get
+.attr("action","abc")로 put할수도있다. action이 뭐가되던지 abc의 value를 action에 대입시켜버린다.
+jquary는 속성값을 해쉬맵처럼 들고있다.
+
+자바스크립트 배열변수엔 데이터 타입이 상관이 없어서
+var data={"date":"오늘일자"); 이렇게 구조체라고 쓸수있따. (자바로치면 arr[]arr={1,2}와같다.)
+이런방식을 Json방식이라한다.
+var data={"date":"오늘일자","1":"1","a":"에이");하면 3개의 방에 date,1,a의 key와 오늘일자,1,에이라는 value를 가진 구조체가 된다.
+vardata는 구조체인것이고, {"date":"오늘일자","1":"1","a":"에이");는 Json이다.
+
+Json장점.
+1.간단하다.
+2.xml보다 데이터가 줄어든다.
+3.근데 지금은 xml파서가 더빨라서 아직까진 xml이빠르다.
+
+Json단점.
+1.구조를 잘못만들면 애러자체를 못찾는다.
+(그래서. 정확하게 구조체obj로 만들어놓은다음 자바스크립트(웹브라우저)에서 제공하는 제이슨이라는 객체로 한번에 Json구조로 만든다.
+물론 우리도 만들수있지만 한두개 보내는게 아니니 그렇게한다.)
+data["id"]="3";
+data["pwd"]="3";
+var jsonStr = JSON.Stringify(data);<<Stringify()어떤구조든간에 JSON으로 바꿔준다.
+alert(jsonStr); 이런방식으로 사용함.
+
+#는 #바로뒤는 ID다.
+
+request.getReader 
+Gson()- 구글에서 만든 클래스. ajax로 데이터로 보내면 해쉬맵형태로 자동으로바까줌.
+JSONObject.class를 적어줘야 JSONObjsect j가 JSON형태로 바뀐다.
+.fromJson ajax에서 제이슨으로 넘겼으면 제이슨으로 넘겨야한다. 
+결국JSONObject 는 해쉬맵 형태이다.
+
+
+서버단으로 보내는 방식 다시설명.
+DB를 사용하는 이유.
+1.transaction-작업단위로 여러사람이 저장하고 사용하기위해서.
+html,javascript,css,jqurey 만으론 DB에 접근할수없어서 중간도매상 한명이 필요하다.
+그래서 JAVA가 중간도매상이된다. 물론 쌩자바를 사용하는게아니라 Tomcat과 자바를 통해서 가는거시다.그런거시여따!!
+톰캣에서 이야기한 설명서대로 webproject 만 제대로만들어준다면(webcontent,src) 웹프로젝트를 바라보고 소매상들이 요청해주면 요청을 보내주는 역활을
+자동으로해준다. 톰캣없었으면 서버부터 만들어야했던 거시였다!!
+자바가 어떤 플랫폼이든 jvm만 실행하면 다돌아가게 만들어지다보니 응용프로그램보다 웹프로그램으로써의 가치가 상승했다!(+4강화)
+PHP가 음청나게 수요가 높아졌따. 오라클은 배가아팠다. 그래서 JSP를 만들었다 (크앙!난 사용법만 알면된다!)
+하지만 난 단점이있다. 1 내부적으로 어떻게돌아가는지몰라,2.생명주기를 몰라!!3.난사실 자바인데 jsp라고 포장만했을뿐이다. 자바를 못하면 늬들은 jsp를 못한다!! (이게 제일큼)
+jsp나 java를 사용해야만 DB에 접속할수있따.(엄밀히는 jsp가 자바로 바뀌니 자바로 접속할수있따.)
+결국 html,javascript,css,jqurey 에서 java에 넘기고 java는 DB에 넘겨야한다.
+html,javascript,css,jqurey 에서 java(서버)로 넘어가는게 결국 1.form2.ajax,3.다른 라이브러리를 이용한 ajax
+뭘쓰던 "무슨값을 줄께"라고 알려줘야 서버가 알수있을것이니 key:value로 html,javascript,css,jqurey 에서 보내는 거시여따.
+서버단에서 value는 중요하지않다. "중요한건 key이다. 화면에서 내가 어떤값으로 보내겠다." 이다
+form태그는 name으로 보내니 name만 잘알면된다.(제일쉬움 다만 더쉬운건 XML과 제이슨)
+html,javascript,css,jqurey정적이라 동적인 DB에 들어갈수없어서 java에 중간도매를 맏기는것이고, java와 form태그의 대화가 name이다.
+왜 json으로 해야 편한지를 보여주겠다지만 약이라고 생각한다. 
+네이버처럼 로그인과 화면단이 다로돌게할려면 i프레임 쓰던지 ajax쓰던지 둘중하나해줘야한다.
+from 태그는 화면구성과 서버연결을 둘다같이해야하고 쓸대없는것이 많이들어가기때문에 매우 비효율적이다.
+그리고 수정할떄 login과 login_ok를 둘다 수정해야돼기때문에 매우 비효율적이시다!
+
+
+1.form
+
+2.url
+
+
+3.Json
+
+

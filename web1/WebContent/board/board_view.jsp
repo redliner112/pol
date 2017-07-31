@@ -9,6 +9,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+body {
+  background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
+}
+</style>
 
 <body>
 <%

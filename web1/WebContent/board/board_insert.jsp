@@ -5,12 +5,16 @@
 <%@ page import="com.test.common.DBConn" %>
 <%@ page import="com.test.dto.BoardInfo" %>
 <%@ page import="com.test.dto.User_Info" %>
+<style>
+body {
+  background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
+}
+</style>
 <body>
 <jsp:include page="/common/top.jsp" flush="fasle">
  	<jsp:param name="login" value="<%=login %>"></jsp:param>
 </jsp:include>
 
-</script>
 
 <form action="<%=rootPath%>/board/board_insert_ok.jsp">
     <div class="container">
