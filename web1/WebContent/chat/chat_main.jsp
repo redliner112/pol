@@ -49,7 +49,7 @@ var AjaxUtil = function (url,params,type,dataType){
 	if(params){
 		var paramArr = params.split(",");
 		
-		var data={};//{}를 변수명에 대입하는 이유는 {}안에있는것들을 변수화 시키기위해서? 그렇다면 {}범위는 어디부터인가?
+		var data={};//{}를 변수명에 대입하는 이유는 {}안에있는것들을 변수화 시키기위해서? 그렇다면 {}범위는 어디부터인가?<<그냥 초기화.
 		for(var i=0,max=paramArr.length;i<max;i++){
 			var objType = paramArr[i].split("_")[0];
 			var objName = paramArr[i].split("_")[1];
@@ -65,7 +65,7 @@ var AjaxUtil = function (url,params,type,dataType){
 		
 	}
 	this.type = type?type:"POST";
-	this.dataType = dataType?dataType:"json";//????
+	this.dataType = dataType?dataType:"json";//3항연산자. da
 	this.callbackSuccess = function(json){
 		var rul = json.url;//json.url은 어디서 급나온것인지??
 		var data = json.data;

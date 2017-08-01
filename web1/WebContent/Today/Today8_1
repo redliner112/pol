@@ -6,3 +6,7 @@
 .reaLine() 그라인을 그대로 읽고 있으면true후 리턴한후 다음줄을 읽는다. false가 날때까지.
 
 BufferedReader br = request.getReader(); BufferedReader는 두번못읽고 한번읽고 끝나기때문에 두번읽을려면 다른것을 해줘야한다.
+
+request.getrequestURL하게되면 내가 이동한 주소가 나오게된다.
+nowUrl 현제 url
+.parent() 그태그를 감싸고있는 태그를 찾음.
