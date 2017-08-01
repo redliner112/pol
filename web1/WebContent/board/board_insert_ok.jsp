@@ -52,3 +52,4 @@ if(<%=resultNum%>==1){
 	history.back();
 }
 </script>
+<%@ include file="/common/bottom.jsp"%>

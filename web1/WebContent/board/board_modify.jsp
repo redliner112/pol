@@ -9,7 +9,6 @@ body {
   background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
 }
 </style>
-<body><jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
 <%
 	int pBinum = Integer.parseInt(request.getParameter("binum"));
 	String pBiPwd = request.getParameter("bipwd");
@@ -102,3 +101,4 @@ body {
 
 </body>
 </html>
+<%@ include file="/common/bottom.jsp"%>

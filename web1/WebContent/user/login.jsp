@@ -11,37 +11,35 @@ body {
 }
 </style>
 <body>
- <jsp:include page="/common/top.jsp" flush="fasle">
- 	<jsp:param name="login" value="<%=login %>"></jsp:param>
-</jsp:include>
- <div class="container" >
+	<div class="container">
+		<form class="form-signin" action="<%=rootPath%>/main.jsp">
+			<h2 class="form-signin-heading">Please login</h2>
+			<label for="inputEmail" class="sr-only">ID</label> <input type="text"
+				id="id" name="id" class="form-control" placeholder="ID" required
+				autofocus> <label for="inputPassword" class="sr-only">Password</label>
+			<input type="password" name="pwd" id="pwd" class="form-control"
+				placeholder="Password" required>
+			<div class="checkbox">
+				<label> <input type="checkbox" value="remember-me">
+					Remember me
+				</label>
+			</div>
+			<button id="btn2" class="btn btn-lg btn-primary btn-block"
+				type="button">Login</button>
+		</form>
 
-      <form action="<%=rootPath %>/user/login_ok.jsp" class="form-signin">
-        <h2 class="form-signin-heading">Please login</h2>
-        <label for="inputEmail" class="sr-only">ID</label>
-        
-        <input type="text" name="id" id = "id"class="form-control" placeholder="ID" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-     
-        <input type="password" name="pwd" id = "pwd"class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="button">Login in</button>
-      </form>
-
-    </div> <!-- /container -->
+	</div>
+	<!-- /container -->
     <script>
-    $("button.btn").click(function(){
-    	var id = $("#id").val();
-    	var pwd = $("pwd").val();
-    	var param;
-    	param["id"]=id;
-    	param["pwd"]=id;
-    	param=JSON.stringify(param);
-    	$.ajax({ 
+    $("button.btn").click(function(){//button.앞에 아무것도없으면 button태그를 의미. 의 .btn이면 class의 btn태그가 무조건 클릭되면 실행한다는것.
+    	var id = $("#id").val(); //$바로뒤는 jquery이다.(이게뭘어쩌잔거지?) #바로뒤는 input 태그의 id를 말한다. .val는 값을 가져오는것.
+    	var pwd = $("#pwd").val();
+    	var param={};//도대체 이게무슨소린지 이해가안됨.<<초기화하는것과 비슷하다.
+    	param["userId"]=id;//param["userId"]=id 라는건 인풋태그의 id 어찌변한다는거지?<<User_Info id,pwd가 set되는곳과 똑같이 이름을 userId,userPwd
+    			//마추고난뒤 param에 id와 pwd의 값을 집어넣고 아래에서 
+    	param["userPwd"]=pwd;
+    	param=JSON.stringify(param);//.stringify(param)은 뭘하는거신가?<<prram을 JSON구조로 만들어서 다시 param에 집어넣는다.(pram이 바뀜.)
+    	var a = {
 	        type     : "POST"
 	    ,   url      : "/user/login_ok.jsp"
 	    ,   dataType : "json" 
@@ -52,15 +50,23 @@ body {
 	    ,   data     : param
 	    ,   success : function(result){
 	    	alert(result.msg);
-	    	alert(result.login);
+	    	if(result.login=="ok"){
+	    		location.href = "<%=rootPath%>/main.jsp";
+	    	}else{
+	    		$("#id").val("");
+	    		$("#pwd").val("");
+	    	}
 	    }
 	    ,   error : function(xhr, status, e) {
 		    	alert("에러 : "+e);
 		},
 		done : function(e) {
 		}
-		});
+    	};
+    	
+    	$.ajax(a);
     });
     </script>
 </body>
 </html>
+<%@ include file="/common/bottom.jsp"%>

@@ -62,9 +62,7 @@ try{
 	DBConn.closeCon();
 }
 %> 
-<jsp:include page="/common/top.jsp" flush="fasle">
- 	<jsp:param name="login" value="<%=login %>"></jsp:param>
-</jsp:include>
+
  <div class="container">
       <div class="starter-template">
 <table class='table table-bordered table-hover'>
@@ -115,3 +113,4 @@ function deleteBoard(){
 </script>
 </body>
 </html>
+<%@ include file="/common/bottom.jsp"%>

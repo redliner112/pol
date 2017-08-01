@@ -65,8 +65,7 @@ function doCheckValue(){
 	var test8 = document.getElementById("hp3").value;
 	var test9 = document.getElementById("zipcode").value;
 	var test10 = document.getElementById("password").value;
-	var params = "?";
-	 params += "&id="+id;
+	 var params = "&id="+id;
 	 params += "&name="+name;
 	 params += "&age="+age;
 	 params += "&address="+address;
@@ -77,7 +76,7 @@ function doCheckValue(){
 	 params += "&zipcode="+zipcode;
 	 params += "&password="+password;
 
-	var au = new AjaxUtil("/test/exam01_ok.jsp", params);
+	var au = new AjaxUtil("exam01_ok.jsp", params);
 	au.send();
 }
 </script>

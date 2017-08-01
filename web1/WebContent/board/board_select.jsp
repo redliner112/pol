@@ -10,18 +10,14 @@ body {
 }
 </style>
 <body>
-<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
 <script>
 function goBoard(biNum,param2){
 	location.href="<%=rootPath%>/board/board_view.jsp?binum=" +biNum;
 }
 </script>
-
-	<jsp:include page="/common/top.jsp" flush="fasle">
- 	<jsp:param name="login" value="<%=login %>"></jsp:param>
-</jsp:include>
-   <div class="container">
+    <div class="container">
       <div class="starter-template">
+
  <%
 	String searchTarget = request.getParameter("searchTarget");
 	String searchStr = request.getParameter("searchStr");
@@ -105,3 +101,4 @@ function goBoard(biNum,param2){
 </div>
 </body>
 </html>
+<%@ include file="/common/bottom.jsp"%>

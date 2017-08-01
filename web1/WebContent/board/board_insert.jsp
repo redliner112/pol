@@ -11,10 +11,6 @@ body {
 }
 </style>
 <body>
-<jsp:include page="/common/top.jsp" flush="fasle">
- 	<jsp:param name="login" value="<%=login %>"></jsp:param>
-</jsp:include>
-
 
 <form action="<%=rootPath%>/board/board_insert_ok.jsp">
     <div class="container">
@@ -22,11 +18,11 @@ body {
 <table class = "table">
 <tr>
 <td>제목 :</td>
-<td><input type="text" name="bititle"/></td>
+<td><input type="text" name="bititle"  /></td>
 </tr>
 <tr>
 <td> 내용: </td>
-<td><textarea name="bicontent" /></textarea></td>
+<td><textarea name="bicontent"size="200"  style="height:150px;" /></textarea></td>
 </tr>
 <tr>
 <td>  id : </td>
@@ -47,3 +43,4 @@ body {
 </form>
 </body>
 </html>
+<%@ include file="/common/bottom.jsp"%>
