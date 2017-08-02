@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:include page="/test/top.jsp" flush="false">
-<jsp:param value="너너너" name="test"/>
-</jsp:include>
-아래
+
 </body>
 </html>

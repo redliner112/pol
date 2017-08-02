@@ -24,7 +24,7 @@ String hp3 = "";
 
 boolean login = false;
 if(userId!=null){
-	 userName = (String) session.getAttribute("username");
+	 userName = (String) session.getAttribute("username");//(String)왜붙였지?
 	 age = (int) session.getAttribute("age");
 	 address = (String) session.getAttribute("address");
 	 hp1 = (String) session.getAttribute("hp1");
@@ -32,8 +32,8 @@ if(userId!=null){
 	 hp3 = (String) session.getAttribute("hp3");
 	login = true;
 }
-String rootPath = request.getContextPath();
-Date toDate = new Date();
+String rootPath = request.getContextPath();//request.getContextPath();뭐였지?
+Date toDate = new Date();//뭐였지??
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss");
 String toDateStr = sdf.format(toDate);
 
@@ -58,7 +58,7 @@ if(login){
 var rootPath ="<%=rootPath%>";
 $(document).ready(function(){
 	var nowUrl = "<%=nowUrl%>";
-	var obj = $("a[href='" + nowUrl +"']").parent().attr("class","active");
+	var obj = $("a[href='" + nowUrl +"']").parent().attr("class","active");//a[href=""]가 뭐하란거였지?
 })
 function doMovePage(pageId){
 	var url="";

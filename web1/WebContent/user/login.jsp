@@ -18,7 +18,7 @@ body {
 				id="id" name="id" class="form-control" placeholder="ID" required
 				autofocus> <label for="inputPassword" class="sr-only">Password</label>
 			<input type="password" name="pwd" id="pwd" class="form-control"
-				placeholder="Password" required>
+				placeholder="Password" required><!--placeholder="Password" required?  -->
 			<div class="checkbox">
 				<label> <input type="checkbox" value="remember-me">
 					Remember me
