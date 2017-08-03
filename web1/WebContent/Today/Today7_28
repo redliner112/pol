@@ -17,3 +17,4 @@ Import해주는 파일들
     		$() 셀렉터 html에서의 가지고싶은 객체를 안에다 써주면 찾을수있따.
 $(bottun)
 $(div.first)div. 의 first를 찾아온다.
+#table 은 #뒤의id값을 찾아서 적용시킨다.

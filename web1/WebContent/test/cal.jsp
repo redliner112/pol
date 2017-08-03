@@ -1,46 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
-<input type="text" id="num1_1">
-+
-<input type="text" id="num1_2">
-<input type="button" value="계산"  id="cal1">
-<input type="text" id="result1">
 
-<br/>
-
-<input type="text" id="num2_1">
--
-<input type="text" id="num2_2">
-<input type="button" value="계산"  id="cal2">
-<input type="text" id="result2">
-
-<br/>
-
-<input type="text" id="num3_1">
-*
-<input type="text" id="num3_2">
-<input type="button" value="계산"  id="cal3">
-<input type="text" id="result3">
-
-<br/>
-<input type="text" id="num4_1">
-/
-<input type="text" id="num4_2">
-<input type="button" value="계산"  id="cal4">
-<input type="text" id="result4">
+	<div class="container">
+		<table id="table" data-height="460"
+			class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th data-field="calnum"  class="text-center">번호</th>
+					<th data-field="num1"  class="text-center">숫자1</th>
+					<th data-field="num2"  class="text-center">숫자2</th>
+					<th data-field="op"  class="text-center">연산자</th>
+					<th data-field="result"  class="text-center">결과값</th>
+				</tr>
+			</thead>
+			<tbody id="result_tbody">
+			</tbody>
+		</table>
+	</div>
 연산자 : <input type = "text" id = "op"/>
 <input type = "button" id = "getCal" value = "계산리스트호출"/>
 <div id = "result_div" class = "container"></div>
 
 <script>
 var ops = ["","+","-","*","/"];//0번째 방부터 순서대로 배열로 집어넣는다.
-$("#getCal").click(function(){//$은 셀렉터. ()의 것을 무조건 실행한다. #은 input태그의  아이디값가져오는거 맞남?
+$("#getCal").click(function(){//$은 셀렉터. ()의 것을 무조건 실행한다. #은 input태그의  ID가져오는거 맞아.
 	var op = $("#op").val();
 	
 	var param = {};
 	param["op"] = op;
 	param = JSON.stringify(param);
+	//a.type="POST"가 되는것이고, a.url="/test/cal_select.jsp"되는 구조체를 만드는것.
 	var a = {
 			type	:"POST"
 		,	url		:"/test/cal_select.jsp"
@@ -50,18 +40,19 @@ $("#getCal").click(function(){//$은 셀렉터. ()의 것을 무조건 실행한
 			xhr.setRequestHeader("Content-Type","application/json");
 		}
 		, data		: param
-		, success : function(results){
-			for(var i=0,max=results.length; i<max; i++){//조건이 2개가 될수있나?
-				var result = results[i];
+		, success : function(result){
+	        $('#table').bootstrapTable({
+	            data: result
+	        });
 				//$("#result_div").innerHTML += "adsf";
 				//$("#result_div").append("adsf");
-				$("#result_div").append(result.calnum + "," + result.num1 + ","+ result.op + ","+ result.num2 + "<br/>");
-			}//append가뭐였지?
+				//$("#result_div").append(result.calnum + "," + result.num1 + ","+ result.op + ","+ result.num2 + "<br/>");
+				//append가뭐였지? innerHTML +=을 자동으로 해주는것.
 		}
 		,	error : function(xhr, status, e){
 			alert("에러:" +e);
 		},
-		done :function(e){
+		done :function(e){//complete 성공과 실패의 상관없이 실행한다.
 			
 		}
 	};

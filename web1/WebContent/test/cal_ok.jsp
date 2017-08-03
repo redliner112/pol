@@ -7,6 +7,7 @@
 <%
 Gson g = new Gson();
 HashMap<String,String> hm = g.fromJson(request.getReader(), HashMap.class);
+//request.getReader() 내가요청한 버퍼들을 전부다 읽는 객체.
 String numStr1 = hm.get("num1");
 String numStr2 = hm.get("num2");
 int num1 = Integer.parseInt(numStr1);
