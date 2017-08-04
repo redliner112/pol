@@ -7,20 +7,27 @@
 <%
 Gson g = new Gson();
 HashMap<String,String>hm = g.fromJson(request.getReader(),HashMap.class);
-String jnumStr = hm.get("jnum2");
-int jnum = Integer.parseInt(jnumStr);
-String jttext = hm.get("jttext2");
+String giname = hm.get("giname");
+String gidesc = hm.get("gidesc");
+String vinumStr = hm.get("vinum");
+int vinum = Integer.parseInt(vinumStr);
+String gicredat = hm.get("gicredat");
+String gicretim = hm.get("gicretim");
 
-int result =0;
-Connection con= null;
-PreparedStatement ps = null;
-int insertResult = 0;
+int result=0;
+Connection con = null;
+PreparedStatement ps =null;
+int  insertResult = 0;
 try{
 	con = DBConn.getCon();
-	String sql = "insert into json_test(jtnum,jttest) values(?,?)";
+	String sql = "insert into goods_info(giname,gidesc,vinum,gicredat,gicretim)";
+			sql+="values(?,?,?,?,?)";
 	ps = con.prepareStatement(sql);
-	ps.setInt(1,jnum);
-	ps.setString(2,jttext);
+	ps.setString(1,giname);
+	ps.setString(2,gidesc);
+	ps.setInt(3,vinum);
+	ps.setString(4,gicredat);
+	ps.setString(5,gicretim);
 	insertResult = ps.executeUpdate();
 	if(insertResult==1){
 		con.commit();
@@ -28,7 +35,10 @@ try{
 }catch(Exception e){
 	out.println(e);
 }finally{
-	ps.close();
+	if(ps!=null){
+		ps.close();
+		ps = null;
+	}
 	DBConn.closeCon();
 }
 HashMap<String,Integer> resultMap = new HashMap<String,Integer>();

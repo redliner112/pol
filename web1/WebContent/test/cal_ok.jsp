@@ -49,7 +49,10 @@ try{
 	out.println(e);
 	
 }finally{
-	ps.close();
+	if(ps!=null){
+		ps.close();
+		ps = null;
+	}
 	DBConn.closeCon();
 }
 HashMap<String, Integer> resultMap = new HashMap<String,Integer>();

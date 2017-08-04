@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
-번호<input type = "text" id = "jnum2"/>
+번호<input type = "text" id = "jnum"/>
 내용<input type = "text" id = "jttext"/>
 <input type = "button" id = "insertjson" value = "삽입하기"/>
+
 
 <div class="container">
 		<table id="table" data-height="460"
@@ -27,6 +28,7 @@ $("#getjson").click(function(){
 	var param = {};
 	param["jnum"]=jnum;
 	param = JSON.stringify(param);
+	alert(param);
 	var a = {
 			type	: "POST"
 		,	url		:"/test/json_test_ok.jsp"
@@ -50,10 +52,12 @@ $("#getjson").click(function(){
 	};
 	$.ajax(a);
 });
-$("#insertjson").click(funcktion{
+$("#insertjson").click(function(){
+	var jnum2 = $("#jnum2").val();
+	var jttext2 = $("#jttext2").val();
 	var param = {};
 	param["jnum2"] = jnum2;
-	param["jttext"] = jttext;
+	param["jttext2"] = jttext2;
 	param = JSON.stringify(param);
 	var a = {
 			type	:"POST"
@@ -65,7 +69,7 @@ $("#insertjson").click(funcktion{
 			}
 			,	data		:param
 			,	success 	:function(result){
-				$("#result").var(result.result);
+				$("#result").val(result.result);
 			}
 			,	error : function(xhr,status,e){
 					alert("에러:" +e);

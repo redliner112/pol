@@ -7,7 +7,6 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.google.gson.*" %>
 <%@ page import="java.io.*" %>
-
 <%
 String id = null;
 String pwd = null;
@@ -18,26 +17,25 @@ ui = g.fromJson(request.getReader(), User_Info.class);
 String result = "";
 String login = "false";
 if(ui!=null){
-	
 	Connection con = null;
 	PreparedStatement ps = null;
 	try{
 		con = DBConn.getCon();
-		String sql = "select username, age, address, hp1, hp2, hp3, userpwd from user_info where userid=?";
+		String sql = "select username,age,address,hp1,hp2,hp3,userpwd from user_info where userid=?";
 		ps = con.prepareStatement(sql);
-		ps.setString(1, ui.getUserId());
+		ps.setString(1,ui.getUserId());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()){
 			String userPwd = rs.getString("userpwd");
-			String userName = rs.getString("username");
+			String userName = rs.getString("userName");
 			int age = rs.getInt("age");
 			String address = rs.getString("address");
 			String hp1 = rs.getString("hp1");
 			String hp2 = rs.getString("hp2");
 			String hp3 = rs.getString("hp3");
 			if(userPwd.equals(ui.getUserPwd())){
-				result =  "로그인 성공";
-				login="ok";
+				result = "로그인 성공";
+				login = "ok";
 				session.setAttribute("userid",ui.getUserId());
 				session.setAttribute("username",userName);
 				session.setAttribute("age",age);
@@ -46,31 +44,33 @@ if(ui!=null){
 				session.setAttribute("hp2",hp2);
 				session.setAttribute("hp3",hp3);
 			}else{
-				result =  "비밀번호 틀렸어 임마!";
+				result = "비밀번호 틀려쪄";
 			}
 		}
+		
 	}catch(Exception e){
-		System.out.println(e);
+		System.out.print(e);
 	}finally{
-		 if(ps!=null){
-			 ps.close();
-			 ps = null;
-		 }
-		 DBConn.closeCon();
+		if(ps!=null){
+			ps.close();
+			ps = null;
+		}
+		DBConn.closeCon();
 	}
 	if(result.equals("")){
-		result =  "그런 아이디 없다잖아!!";
+		result="아이디 없쪄";
 	}
 }else{
-	// 세션 초기화
-	result = "로그아웃 되셨습니다.";
+	result = "로그아웃돼쪄";
 	session.invalidate();
 }
 HashMap hm = new HashMap();
 hm.put("login","ok");
 hm.put("msg",result);
 
-String json = g.toJson(hm);//g.toJson()뭘까아요?<<hm형태를json형태로으로 바꿔주는함수
+String json = g.toJson(hm);
 System.out.println(json);
 out.write(json);
+
+
 %>

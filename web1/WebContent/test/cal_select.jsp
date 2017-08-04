@@ -40,14 +40,14 @@ try{
 		calList.add(rhm);
 	}
 }catch(Exception e){
-	
-}finally{
-	if(ps!=null){
-		ps.close();
-		ps = null;
+		out.println(e);
+	}finally{
+		if(ps!=null){
+			ps.close();
+			ps = null;
+		}
+		DBConn.closeCon();
 	}
-	DBConn.closeCon();
-}
 String json = g.toJson(calList);
 System.out.println(json);
 out.print(json);

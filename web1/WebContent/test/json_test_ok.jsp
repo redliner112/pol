@@ -18,7 +18,7 @@ PreparedStatement ps = null;
 ArrayList<Map<String,String>> jsonList	 = new ArrayList<Map<String,String>>();
 try{
 	con = DBConn.getCon();
-	String sql = "select jtnum,jttext from json_test where 1=1";
+	String sql = "select jtnum,jttext from json_text where 1=1";
 	
 	if(jnum!=null &&!jnum.equals("")){
 		sql +=" and jtnum = ?";

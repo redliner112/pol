@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
-
 	<div class="container">
 		<table id="table" data-height="460"
 			class="table table-bordered table-hover">
@@ -18,11 +17,17 @@
 			</tbody>
 		</table>
 	</div>
+<select id="s_vendor">
+<option value="">회사선택</option>
+</select> 
 연산자 : <input type = "text" id = "op"/>
 <input type = "button" id = "getCal" value = "계산리스트호출"/>
 <div id = "result_div" class = "container"></div>
 
 <script>
+$(document).ready(function(){
+	$("#s_vendor").append("<option value='1'>현대자동차</option>");
+})
 var ops = ["","+","-","*","/"];//0번째 방부터 순서대로 배열로 집어넣는다.
 $("#getCal").click(function(){//$은 셀렉터. ()의 것을 무조건 실행한다. #은 input태그의  ID가져오는거 맞아.
 	var op = $("#op").val();
@@ -33,7 +38,7 @@ $("#getCal").click(function(){//$은 셀렉터. ()의 것을 무조건 실행한
 	//a.type="POST"가 되는것이고, a.url="/test/cal_select.jsp"되는 구조체를 만드는것.
 	var a = {
 			type	:"POST"
-		,	url		:"/test/cal_select.jsp"
+		,	url		:"/test/goods_select.jsp"
 		,dataType	:"json"
 		,beforeSend:function(xhr){
 			xhr.setRequestHeader("Accept","application/json");
