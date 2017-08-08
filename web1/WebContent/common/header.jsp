@@ -48,7 +48,7 @@ String loginStr = "로그인";
 if(login){
 	loginStr = "로그아웃";
 }
-String version = "1.2";
+String version = "1.3.3";
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
@@ -58,11 +58,31 @@ String version = "1.2";
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
+		//1 79번째 라인까지 실행했을떄 data까지 ajax를통해서 그려지는 것인가?
+var sBlockStr = "<li><a>◀◀</a></li>";
+sBlockStr += "<li><a>◀</a></li>";
+var eBlockStr = "<li><a>▶</a></li>";
+eBlockStr += "<li><a>▶▶</a></li>";
+function setPagination(sNum, eNum, nPage, objId){
+	var pageStr = sBlockStr;
+	for(var i=sNum, max=eNum;i<=max;i++){
+		if(i==nPage){
+			pageStr += "<li class='active'><a>" + i + "</a></li>";
+		}else{
+			pageStr += "<li><a>" + i + "</a></li>";
+		}
+	}
+	pageStr += eBlockStr;
+	$("#" + objId).html(pageStr);//		1. 이건왜 HTML로 넘기는것일까? 그려지는곳이 id가 page인 html태그쪽이라서?
+}
+//cal에있는 id가 page인것을 찾아서 그곳에 그려진다. 
+//startBlock, endBlock,pageInfo.nowPage를가져온상태.(결국 data는 이따는거네)
 var rootPath ="<%=rootPath%>";
 $(document).ready(function(){
 	var nowUrl = "<%=nowUrl%>";
 	var obj = $("a[href='" + nowUrl +"']").parent().attr("class","active");//a[href=""]가 뭐하란거였지?<<""로 이동.
 })
+//$a[href='nowUrl'].parent().attr("class","active");//	1설명필요.
 function doMovePage(pageId){
 	var url="";
 	if(pageId == "board"){
@@ -74,6 +94,27 @@ function doMovePage(pageId){
 	}
 	location.href = url;
 }
+
+function goPage(pParams, pUrl, pCallBackFunc){//ajax를 header로 빼놓은것.
+	var params = JSON.stringify(pParams);
+	$.ajax({ 
+    		type     : "POST"
+	    ,   url      : pUrl//"/test/vendor_select.jsp"
+	    ,   dataType : "json" 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : params
+	    ,   success : pCallBackFunc//cal의 3번단 실행.
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		complete  : function() {
+		}
+	});
+}
+
 </script>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
