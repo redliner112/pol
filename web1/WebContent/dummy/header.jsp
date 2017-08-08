@@ -64,8 +64,6 @@ sBlockStr += "<li><a>◀</a></li>";
 var eBlockStr = "<li><a>▶</a></li>";
 eBlockStr += "<li><a>▶▶</a></li>";
 function setPagination(sNum, eNum, nPage, objId){
-	//setPagination에 sNum,eNum,nPage,objId가 필요한 이유를 설명해봐.
-	//시작블럭sNum, 끝블럭eNum의 값과현제 블럭을 id=page로 출력하는것. 그리고 action 태그로 nNum은 활성화시켜줌
 	var pageStr = sBlockStr;
 	for(var i=sNum, max=eNum;i<=max;i++){
 		if(i==nPage){
@@ -97,23 +95,24 @@ function doMovePage(pageId){
 	location.href = url;
 }
 
-function goPage(pParams, pUrl, pCallBackFunc){//ajax를 header로 빼놓은것.
+function goPage(pParams,pUrl,pCallBackFunc){
 	var params = JSON.stringify(pParams);
-	$.ajax({ 
-    		type     : "POST"
-	    ,   url      : pUrl//"/test/vendor_select.jsp"
-	    ,   dataType : "json" 
-	    ,   beforeSend: function(xhr) {
-	        xhr.setRequestHeader("Accept", "application/json");
-	        xhr.setRequestHeader("Content-Type", "application/json");
-	    }
-	    ,   data     : params
-	    ,   success : pCallBackFunc//cal의 3번단 실행.
-	    ,   error : function(xhr, status, e) {
-		    	alert("에러 : "+e);
-		},
-		complete  : function() {  //done : function(e)대신 이게 들어간 이유가?
-		}
+	$.ajax({
+		type 	:"POST"
+	,	url		:pUrl
+	,	dataType:"json"
+	,   beforeSend: function(xhr) {
+	       xhr.setRequestHeader("Accept", "application/json");
+	       xhr.setRequestHeader("Content-Type", "application/json");
+	}
+	,	data	:params
+	,	success : pCallBackFunc
+	,	error	:function(xhr,status,e){
+			alert("에러:" +e);
+	},
+	complete		:function(){
+		
+	}
 	});
 }
 

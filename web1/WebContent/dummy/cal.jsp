@@ -32,70 +32,69 @@
 <input type="button" id="getCal" value="계산리스트호출" />
 <div id="result_div" class="container"></div>
 <script>
-				<!--3  -->
+
 var thisBlockCnt = 0;
 var thisNowPage = 0;
 var thisTotalPage = 0;
 
-function callback(results){//콜백함수를 만들어서 미리 빼놓은거임.
+function callback(result){
 	var vendorList = results.vendorList;
-	var goodsList = results.goodsList;
+	var goodsList =results.goodsList;
 	var pageInfo = results.pageInfo;
 	
 	var blockCnt = new Number(pageInfo.blockCnt);
 	thisBlockCnt = blockCnt;
-	var nowPage= new Number(pageInfo.nowPage);
+	var nowPage = nowPage;
 	thisNowPage = nowPage;
-	var startBlock = Math.floor((nowPage-1)/blockCnt) * 10+1;
-	var endBlock = startBlock+blockCnt-1;//마지막 블록의 숫자결국 무조건 0이되는 숫자가나옴.
+	var startBlock = Math.floor((nowPage-1)/blockCnt)*10+1;
+	var endBlock = startBlock + blockCnt-1;
 	var totalPageCnt = new Number(pageInfo.totalPageCnt);
 	thisTotalPage = totalPageCnt;
 	if(endBlock>totalPageCnt){
-		endBlock = totalPageCnt;
+	endBlock = totalPageCnt;
 	}
-	setPagination(startBlock, endBlock, pageInfo.nowPage,"page");
-	for(var i=0, max=vendorList.length;i<max;i++){
-		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
+	setPagination(startBlock,endBlock,pageInfo.nowPage,"page");
+	
+	for(vari=0,max=vendorList.length;i<max;i++){
+	$("#s_vendor").append("<option value'" + vendorlist[i].vinum + "'>" + vendorlist[i].viname + "</option>")
 	}
-    $('#table').bootstrapTable('destroy');
-    $('#table').bootstrapTable({
-        data: goodsList
-    });
-    setEvent();
-}
-<!--  처음 시작단. 1page   -->
-$(document).ready(function(){<!-- $(document).ready 시작시 무조건시작   -->
-	var params = {};
-	params["nowPage"] = "1";
-	goPage(params, "/test/vendor_select.jsp", callback);
-});
-
-<!--    -->
-function setEvent(){
-	$("ul[class='pagination']>li>a").click(function(){<!-- ul의 class=pagination의 li의 a사이를 클릭하면.  -->
-		var goPageNum = new Number(this.innerHTML); // 		2.this.innerHTML란 <a> </a>사이에 있는걸 이야기하는것인가요? 
-		if(isNaN(goPageNum)){
+	$('#table').bootstrapTable('destroy');
+	$('#table').bootstrapTable({
+		data:goodsList	
+	});
+	setEvent();
+	}
+	$(document).ready(function(){
+		var params = {};
+		params["nowPage"] = "1";
+		goPage(params,"/test/vendor_select.jsp",callback);
+	});
+	
+	function setEvent(){
+		$("ul[class='pagination']>li>a").click(function(){
+			var goPageNum = now Number(this.innerHTML);
 			if(this.innerHTML=="◀"){
-				thisNowPage -= thisBlockCnt;
+				thisNowPage -=thisBlockCnt;
 			}else if(this.innerHTML=="◀◀"){
-				thisNowPage = 1;
+				thisNowPage=1;
 			}else if(this.innerHTML=="▶"){
-				thisNowPage += thisBlockCnt;
+				thisNowPage +=thisBlockCnt;
 			}else if(this.innerHTML=="▶▶"){
 				thisNowPage = thisTotalPage;
 			}
 			if(thisNowPage<=0){
-				thisNowPage = 1;
+				thisNowPage=1;
 			}else if(thisNowPage>thisTotalPage){
 				thisNowPage = thisTotalPage;
 			}
 			goPageNum = thisNowPage;
 		}
 		var params = {};
-		params["nowPage"] = "" + goPageNum;
-		goPage(params, "/test/vendor_select.jsp", callback);
-	})
-}
-</script>
-</body>
-</html>
+		params["nowPage"] = ""+goPaggNum
+		goPage(params,"test/vendor_select.jsp",callback);
+		})
+	}
+	
+	
+	
+	
