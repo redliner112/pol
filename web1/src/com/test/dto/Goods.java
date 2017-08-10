@@ -3,7 +3,7 @@ package com.test.dto;
 import java.util.HashMap;
 import java.util.List;
 
-public class Goods {
+public class Goods{
 
 	private int giNum;
 	private String giName;
@@ -12,6 +12,7 @@ public class Goods {
 	private String viName;
 	private String command;
 	private Page page;
+
 
 	public Page getPage() {
 		return page;

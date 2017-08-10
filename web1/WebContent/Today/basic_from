@@ -1,0 +1,25 @@
+										AJAX 기본형태
+function (){
+	$.ajax({ 
+    		type     : 
+	    ,   url      : 
+	    ,   dataType : 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : 
+	    ,   success : 
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		complete  : function() {
+		}
+	});
+}
+
+type 전송방식-1GET,2.POST
+url 보내는 페이지
+dataType  보내는 형식. 지금은 "json"형식으로보냄
+data Json형태의 데이터 타입을 받는것.
+success 성공했을때의 처리부분

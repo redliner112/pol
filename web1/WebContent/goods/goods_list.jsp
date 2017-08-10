@@ -12,6 +12,7 @@
 				<th data-field="giDesc" class="text-center">상품설명</th>
 				<th data-field="viNum" class="text-center">생산자번호</th>
 				<th data-field="viName" class="text-center">생산자이름</th>
+			
 			</tr>
 		</thead>
 		<tbody id="result_tbody">
@@ -33,13 +34,20 @@
 var thisBlockCnt = 0;
 var thisNowPage = 0;
 var thisTotalPage = 0;
+//>>>>>>>>>>>>>>설명필요<<<<<<<<<<<<<<<<<<<
+//1.callback(results)에서 result는 어디서 선언되었고,어디서 온것인가???
+//2. 그리고 setPagination 처럼 다른jsp파일이나 클래스에 퍼저있는것들 빠르게찾는 방법은?
 function callback(results){
-	var goodsList = results;
+	var goodsList = results.list;
+	var pageInfo = results.page;
+	setPagination(pageInfo, "page");//header에있음.
+	setEvent(pageInfo);
     $('#table').bootstrapTable('destroy');
     $('#table').bootstrapTable({
         data: goodsList
     });
 }
+//2
 $(document).ready(function(){
 	var page = {};
 	page["nowPage"] = "1";
@@ -48,31 +56,38 @@ $(document).ready(function(){
 	params["command"] = "list";
 	
 	goPage(params, "/list.goods", callback);
+
 });
-function setEvent(){
+//>>>>>>>>>>>>>>설명필요<<<<<<<<<<<<<<<<<<<
+//setEvent()안에 pageInfo는 도대체 어디서 선언되었고,어디서 온것인가??
+function setEvent(pageInfo){
 	$("ul[class='pagination']>li:not([class='disabled'])>a").click(function(){
+		//ul태그의 [class="pagination"]인것중의 li:not([class="disabled"])된것중 a태그의것을 클릭하면
+		var thisNowPage = pageInfo.nowPage;
 		var goPageNum = new Number(this.innerHTML);
 		if(isNaN(goPageNum)){
 			if(this.innerHTML=="◀"){
-				thisNowPage -= thisBlockCnt;
+				thisNowPage -= pageInfo.blockCnt;
 			}else if(this.innerHTML=="◀◀"){
 				thisNowPage = 1;
 			}else if(this.innerHTML=="▶"){
-				thisNowPage += thisBlockCnt;
+				thisNowPage += pageInfo.blockCnt;
 			}else if(this.innerHTML=="▶▶"){
-				thisNowPage = thisTotalPage;
+				thisNowPage = pageInfo.totalPageCnt;
 			}
 			if(thisNowPage<=0){
 				thisNowPage = 1;
-			}else if(thisNowPage>thisTotalPage){
-				thisNowPage = thisTotalPage;
+			}else if(thisNowPage>pageInfo.totalPageCnt){
+				thisNowPage = pageInfo.totalPageCnt;
 			}
 			goPageNum = thisNowPage;
 		}
 		var params = {};
 		params["nowPage"] = "" + goPageNum;
+		var params = {};
+		params["page"] = page;
 		params["command"] = "list";
-		goPage(params, "/test/vendor_select.jsp", callback);
+		goPage(params, "/list.goods", callback);
 	})
 }
 </script>

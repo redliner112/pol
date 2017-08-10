@@ -1,54 +1,53 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@page import = "java.util.Date" %>
-  <%@page import = "java.text.SimpleDateFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
 </head>
 <%!
 public void printStr(String str){
-	System.out.println("adfad");
+	System.out.println("adsfsfad");
 }
 %>
 <%
-String userId = (String)session.getAttribute("userid");	
+String userId = (String) session.getAttribute("userid");
 String userName = "";
-int age = 0;
-String address = "";
-String hp1 ="";
-String hp2 = "";
-String hp3 = "";
+int age =  0;
+String address =  "";
+String hp1 =  "";
+String hp2 =  "";
+String hp3 =  "";
 
 boolean login = false;
 if(userId!=null){
-	 userName = (String) session.getAttribute("username");//(String)왜붙였지?
-	 age = (int) session.getAttribute("age");
-	 address = (String) session.getAttribute("address");
-	 hp1 = (String) session.getAttribute("hp1");
-	 hp2 = (String) session.getAttribute("hp2");
-	 hp3 = (String) session.getAttribute("hp3");
+	userName =  (String) session.getAttribute("username");
+	age =  (int) session.getAttribute("age");
+	address =  (String) session.getAttribute("address");
+	hp1 =  (String) session.getAttribute("hp1");
+	hp2 =  (String) session.getAttribute("hp2");
+	hp3 =  (String) session.getAttribute("hp3");
 	login = true;
 }
-String rootPath = request.getContextPath();//request.getContextPath();뭐였지?
-Date toDate = new Date();//뭐였지??
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss");
-String toDateStr = sdf.format(toDate);
-
+String rootPath = request.getContextPath();
+Date toDate = new Date();
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+String toDateStr = sdf.format(toDate); 
 String init = request.getParameter("init");
 String defaultUrl = "";
 if(init==null && !login){
-	defaultUrl = rootPath + "/user/login.jsp?init=1";
-	response.sendRedirect(defaultUrl);//로그인 페이지로이동하라는뜻.인데 init=1왜붙였지?
+	defaultUrl = rootPath + "/user/login.jsp?init=2";
+	response.sendRedirect(defaultUrl);
 }
 String nowUrl = request.getRequestURI();
 String loginStr = "로그인";
 if(login){
 	loginStr = "로그아웃";
 }
-String version = "1.3.3";
+String version = "1.3.2";
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
@@ -58,80 +57,86 @@ String version = "1.3.3";
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
-		//1 79번째 라인까지 실행했을떄 data까지 ajax를통해서 그려지는 것인가?
+
 Number.prototype.equals = function(obj){
 	if(obj instanceof Number){
 		return this.toString() == obj.toString();
 	}
 	return this==obj;
-}
+}//				>>>>>>>>>>>>>>설명필요<<<<<<<<<<<<<<<<<<<
 
-function setPagination(sNum, eNum, nPage, nTotal, objId){
-	var pageStr = "";
+function setPagination(pageInfo, objId){
+	//set Pagination이 해주는것. 1.<<>>범위밖벗어나면 비활성화 2.현제블럭에 active활성화
+	var sNum = pageInfo.startBlock;//시작블럭
+	var eNum = pageInfo.endBlock;//끝블럭
+	var nPage = pageInfo.nowPage//현제페이지
+	var nTotal = pageInfo.totalPageCnt;//총페이지
+	var pageStr = "";//pageStr초기화
 	if(nPage==1){
 		pageStr += "<li class='disabled'><a >◀◀</a></li>";
 		pageStr += "<li class='disabled' ><a >◀</a></li>";
 	}else{ 
 		pageStr += "<li><a>◀◀</a></li>";
 		pageStr += "<li><a>◀</a></li>";
-	}
-	for(var i=sNum, max=eNum;i<=max;i++){
-		if(i==nPage){
+	}//현제페이지가1일때 <<들 class="disabled"먹여서 안되게함.
+	for(var i=sNum, max=eNum;i<=max;i++){//시작블럭과 끝블럭에서 i++일때
+		if(i==nPage){//i가 현제블럭이면 class="active"로 이벤트적용시킴.
 			pageStr += "<li class='active'><a>" + i + "</a></li>";
 		}else{
 			pageStr += "<li><a>" + i + "</a></li>";
 		}
 	}
-	if(nPage.equals(nTotal)){
+	if(nPage.equals(nTotal)){//현제페이지가 마지막 페이지와 같을때 disable처리.
 		pageStr += "<li class='disabled'><a>▶</a></li>";
 		pageStr += "<li class='disabled'><a>▶▶</a></li>";
 	}else{ 
 		pageStr += "<li><a>▶</a></li>";
 		pageStr += "<li><a>▶▶</a></li>";
 	}
-
 	$("#" + objId).html(pageStr);
 }
-//cal에있는 id가 page인것을 찾아서 그곳에 그려진다. 
-//startBlock, endBlock,pageInfo.nowPage를가져온상태.(결국 data는 이따는거네)
-var rootPath ="<%=rootPath%>";
+//>>>>>>>>>>>>>>설명필요<<<<<<<<<<<<<<<<<<<
+//setPagination이 
+
+var rootPath = "<%=rootPath%>";
 $(document).ready(function(){
 	var nowUrl = "<%=nowUrl%>";
-	var obj = $("a[href='" + nowUrl +"']").parent().attr("class","active");//a[href=""]가 뭐하란거였지?<<""로 이동.
+	var obj = $("a[href='" + nowUrl + "']").parent().attr("class","active");
 })
-//$a[href='nowUrl'].parent().attr("class","active");//	1설명필요.
 function doMovePage(pageId){
-	var url="";
-	if(pageId == "board"){
-		url =rootPath +  "/board/board_select.jsp";
+	var url = "<%=rootPath%>";
+	if(pageId=="board"){
+		url += "/board/board_select.jsp";
 	}else if(pageId=="main"){
-		url = rootPath + "<%=rootPath%>/main.jsp";
-	}else if(pageId=="insert"){
-		url =rootPath +  "/board/board_insert.jsp";
+		url += "/";
+	}else if(pageId=="insertBoard"){
+		url += "/board/board_insert.jsp";
 	}
-	location.href = url;
+	location.href=url;
 }
 
-function goPage(pParams, pUrl, pCallBackFunc){//ajax를 header로 빼놓은것.
+function alertOp(){
+	alert($("#op").val());
+}
+function goPage(pParams, pUrl, pCallBackFunc){
 	var params = JSON.stringify(pParams);
 	$.ajax({ 
     		type     : "POST"
-	    ,   url      : pUrl//"/test/vendor_select.jsp"
+	    ,   url      : pUrl
 	    ,   dataType : "json" 
 	    ,   beforeSend: function(xhr) {
 	        xhr.setRequestHeader("Accept", "application/json");
 	        xhr.setRequestHeader("Content-Type", "application/json");
 	    }
 	    ,   data     : params
-	    ,   success : pCallBackFunc//cal의 3번단 실행.
+	    ,   success : pCallBackFunc
 	    ,   error : function(xhr, status, e) {
 		    	alert("에러 : "+e);
 		},
-		complete  : function() {  //done : function(e)대신 이게 들어간 이유가?
+		complete  : function() {
 		}
 	});
 }
-
 </script>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -151,6 +156,7 @@ function goPage(pParams, pUrl, pCallBackFunc){//ajax를 header로 빼놓은것.
             <li><a href="/user/user_info.jsp">유저정보가기</a></li>
             <li><a href="/role/role_select.jsp">권한정보가기</a></li>
             <li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
+            <li><a href="/goods/goods_list.jsp">GoodsList</a></li>
           </ul>
           
         </div><!--/.nav-collapse -->
