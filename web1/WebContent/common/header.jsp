@@ -59,14 +59,22 @@ String version = "1.3.3";
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
 		//1 79번째 라인까지 실행했을떄 data까지 ajax를통해서 그려지는 것인가?
-var sBlockStr = "<li><a>◀◀</a></li>";
-sBlockStr += "<li><a>◀</a></li>";
-var eBlockStr = "<li><a>▶</a></li>";
-eBlockStr += "<li><a>▶▶</a></li>";
-function setPagination(sNum, eNum, nPage, objId){
-	//setPagination에 sNum,eNum,nPage,objId가 필요한 이유를 설명해봐.
-	//시작블럭sNum, 끝블럭eNum의 값과현제 블럭을 id=page로 출력하는것. 그리고 action 태그로 nNum은 활성화시켜줌
-	var pageStr = sBlockStr;
+Number.prototype.equals = function(obj){
+	if(obj instanceof Number){
+		return this.toString() == obj.toString();
+	}
+	return this==obj;
+}
+
+function setPagination(sNum, eNum, nPage, nTotal, objId){
+	var pageStr = "";
+	if(nPage==1){
+		pageStr += "<li class='disabled'><a >◀◀</a></li>";
+		pageStr += "<li class='disabled' ><a >◀</a></li>";
+	}else{ 
+		pageStr += "<li><a>◀◀</a></li>";
+		pageStr += "<li><a>◀</a></li>";
+	}
 	for(var i=sNum, max=eNum;i<=max;i++){
 		if(i==nPage){
 			pageStr += "<li class='active'><a>" + i + "</a></li>";
@@ -74,8 +82,15 @@ function setPagination(sNum, eNum, nPage, objId){
 			pageStr += "<li><a>" + i + "</a></li>";
 		}
 	}
-	pageStr += eBlockStr;
-	$("#" + objId).html(pageStr);//		1. 이건왜 HTML로 넘기는것일까? 그려지는곳이 id가 page인 html태그쪽이라서?
+	if(nPage.equals(nTotal)){
+		pageStr += "<li class='disabled'><a>▶</a></li>";
+		pageStr += "<li class='disabled'><a>▶▶</a></li>";
+	}else{ 
+		pageStr += "<li><a>▶</a></li>";
+		pageStr += "<li><a>▶▶</a></li>";
+	}
+
+	$("#" + objId).html(pageStr);
 }
 //cal에있는 id가 page인것을 찾아서 그곳에 그려진다. 
 //startBlock, endBlock,pageInfo.nowPage를가져온상태.(결국 data는 이따는거네)
