@@ -35,7 +35,7 @@
 	    ,   success : 
 	    	var goodsList = results.list;
 	    	var pageInfo = results.page;
-	    	setPagination(pageInfo, "page");
+	    	makePagination(pageInfo, "page");
 	    	setEvent(pageInfo);
 	        $('#table').bootstrapTable('destroy');
 	        $('#table').bootstrapTable({

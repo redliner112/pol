@@ -63,7 +63,7 @@ var sBlockStr = "<li><a>◀◀</a></li>";
 sBlockStr += "<li><a>◀</a></li>";
 var eBlockStr = "<li><a>▶</a></li>";
 eBlockStr += "<li><a>▶▶</a></li>";
-function setPagination(sNum, eNum, nPage, objId){
+function makePagination(sNum, eNum, nPage, objId){
 	var pageStr = sBlockStr;
 	for(var i=sNum, max=eNum;i<=max;i++){
 		if(i==nPage){
@@ -95,7 +95,7 @@ function doMovePage(pageId){
 	location.href = url;
 }
 
-function goPage(pParams,pUrl,pCallBackFunc){
+function movePageWithAjax(pParams,pUrl,pCallBackFunc){
 	var params = JSON.stringify(pParams);
 	$.ajax({
 		type 	:"POST"

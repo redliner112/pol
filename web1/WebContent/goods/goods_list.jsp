@@ -12,7 +12,6 @@
 				<th data-field="giDesc" class="text-center">상품설명</th>
 				<th data-field="viNum" class="text-center">생산자번호</th>
 				<th data-field="viName" class="text-center">생산자이름</th>
-			
 			</tr>
 		</thead>
 		<tbody id="result_tbody">
@@ -23,73 +22,52 @@
 	<ul class="pagination" id="page">
 	</ul>
 </div>
-<select id="s_vendor">
-<option value="">회사선택</option>
-</select> 
-연산자 :
-<input type="text" id="op" />
-<input type="button" id="getCal" value="계산리스트호출" />
-<div id="result_div" class="container"></div>
+<div class="container" style="text-align: center; padding-top: 20px;padding-bottom: 20px;">
+		<select id="s_vendor" class="selectpicker">
+		</select> 
+		<label>상품이름 : </label> <input type="text" id="giName" /> 
+		<input type="button" id="searchGoods" value="검색" />
+	</div>
 <script>
-var thisBlockCnt = 0;
-var thisNowPage = 0;
-var thisTotalPage = 0;
-//>>>>>>>>>>>>>>설명필요<<<<<<<<<<<<<<<<<<<
-//1.callback(results)에서 result는 어디서 선언되었고,어디서 온것인가???
-//2. 그리고 setPagination 처럼 다른jsp파일이나 클래스에 퍼저있는것들 빠르게찾는 방법은?
+var pageInfo = {};
+$("#searchGoods").click(function(){
+	var giName = $("#giName").val();//상품이름
+	var viNum = $("#s_vendor").val();//value값이 뭔데?
+	var params = {};
+	params["giName"] = giName;
+	params["viNum"] = viNum;
+	params["command"] = "list";
+	var page = {};
+	page["nowPage"] = "1";
+	params["page"] = page;
+	movePageWithAjax(params,"/list.goods",callback);
+	
+})
 function callback(results){
 	var goodsList = results.list;
-	var pageInfo = results.page;
-	setPagination(pageInfo, "page");//header에있음.
-	setEvent(pageInfo);
+	pageInfo = results.page;
+	var vendorList = results.vendorList;
+	var selStr = "<option value=''>회사선택</option>";
+	for(var i = 0,max=vendorList.length;i <max;i++){
+		var vendor = vendorList[i];
+		selStr +="<option value='" + vendor.viNum + "'>" + vendor.viName + "</option>";
+	}
+	$("#s_vendor").html(selStr);
+	makePagination(pageInfo, "page");
+	setEvent(pageInfo, "/list.goods");
     $('#table').bootstrapTable('destroy');
     $('#table').bootstrapTable({
         data: goodsList
     });
 }
-//2
 $(document).ready(function(){
 	var page = {};
 	page["nowPage"] = "1";
 	var params = {};
 	params["page"] = page;
 	params["command"] = "list";
-	
-	goPage(params, "/list.goods", callback);
-
+	movePageWithAjax(params, "/list.goods", callback);
 });
-//>>>>>>>>>>>>>>설명필요<<<<<<<<<<<<<<<<<<<
-//setEvent()안에 pageInfo는 도대체 어디서 선언되었고,어디서 온것인가??
-function setEvent(pageInfo){
-	$("ul[class='pagination']>li:not([class='disabled'])>a").click(function(){
-		//ul태그의 [class="pagination"]인것중의 li:not([class="disabled"])된것중 a태그의것을 클릭하면
-		var thisNowPage = pageInfo.nowPage;
-		var goPageNum = new Number(this.innerHTML);
-		if(isNaN(goPageNum)){
-			if(this.innerHTML=="◀"){
-				thisNowPage -= pageInfo.blockCnt;
-			}else if(this.innerHTML=="◀◀"){
-				thisNowPage = 1;
-			}else if(this.innerHTML=="▶"){
-				thisNowPage += pageInfo.blockCnt;
-			}else if(this.innerHTML=="▶▶"){
-				thisNowPage = pageInfo.totalPageCnt;
-			}
-			if(thisNowPage<=0){
-				thisNowPage = 1;
-			}else if(thisNowPage>pageInfo.totalPageCnt){
-				thisNowPage = pageInfo.totalPageCnt;
-			}
-			goPageNum = thisNowPage;
-		}
-		var params = {};
-		params["nowPage"] = "" + goPageNum;
-		var params = {};
-		params["page"] = page;
-		params["command"] = "list";
-		goPage(params, "/list.goods", callback);
-	})
-}
 </script>
 </body>
 </html>

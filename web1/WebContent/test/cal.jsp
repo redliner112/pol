@@ -53,7 +53,7 @@ function callback(results){//콜백함수를 만들어서 미리 빼놓은거임
 	if(endBlock>totalPageCnt){
 		endBlock = totalPageCnt;
 	}
-	setPagination(startBlock, endBlock, pageInfo.nowPage,"page");
+	makePagination(startBlock, endBlock, pageInfo.nowPage,"page");
 	for(var i=0, max=vendorList.length;i<max;i++){
 		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
 	}
@@ -67,7 +67,7 @@ function callback(results){//콜백함수를 만들어서 미리 빼놓은거임
 $(document).ready(function(){<!-- $(document).ready 시작시 무조건시작   -->
 	var params = {};
 	params["nowPage"] = "1";
-	goPage(params, "/test/vendor_select.jsp", callback);
+	movePageWithAjax(params, "/test/vendor_select.jsp", callback);
 });
 
 <!--    -->
@@ -93,7 +93,7 @@ function setEvent(){
 		}
 		var params = {};
 		params["nowPage"] = "" + goPageNum;
-		goPage(params, "/test/vendor_select.jsp", callback);
+		movePageWithAjax(params, "/test/vendor_select.jsp", callback);
 	})
 }
 </script>

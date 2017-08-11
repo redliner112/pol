@@ -53,7 +53,7 @@ function callback(result){
 	if(endBlock>totalPageCnt){
 	endBlock = totalPageCnt;
 	}
-	setPagination(startBlock,endBlock,pageInfo.nowPage,"page");
+	makePagination(startBlock,endBlock,pageInfo.nowPage,"page");
 	
 	for(vari=0,max=vendorList.length;i<max;i++){
 	$("#s_vendor").append("<option value'" + vendorlist[i].vinum + "'>" + vendorlist[i].viname + "</option>")
@@ -67,7 +67,7 @@ function callback(result){
 	$(document).ready(function(){
 		var params = {};
 		params["nowPage"] = "1";
-		goPage(params,"/test/vendor_select.jsp",callback);
+		movePageWithAjax(params,"/test/vendor_select.jsp",callback);
 	});
 	
 	function setEvent(){
@@ -91,7 +91,7 @@ function callback(result){
 		}
 		var params = {};
 		params["nowPage"] = ""+goPaggNum
-		goPage(params,"test/vendor_select.jsp",callback);
+		movePageWithAjax(params,"test/vendor_select.jsp",callback);
 		})
 	}
 	
