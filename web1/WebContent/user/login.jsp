@@ -31,24 +31,37 @@ body {
 	</div>
 	<!-- /container -->
     <script>
-    $("button.btn").click(function(){//button.앞에 아무것도없으면 button태그를 의미. 의 .btn이면 class의 btn태그가 무조건 클릭되면 실행한다는것.
-    	var id = $("#id").val(); //$바로뒤는 jquery이다.(이게뭘어쩌잔거지?) #바로뒤는 input 태그의 id를 말한다. .val는 값을 가져오는것.
+    $("button.btn").click(function(){
+    	//셀렉터로 button의 class가btn찾은후 click하면 function()실행되고
+    	var id = $("#id").val(); 
+    	//셀렉터로 id가 id인것을 찾아서 value를 변수 id에 대입.
     	var pwd = $("#pwd").val();
-    	var param={};//도대체 이게무슨소린지 이해가안됨.<<초기화하는것과 비슷하다.
-    	param["userId"]=id;//param["userId"]=id 라는건 인풋태그의 id 어찌변한다는거지?<<User_Info id,pwd가 set되는곳과 똑같이 이름을 userId,userPwd
-    			//마추고난뒤 param에 id와 pwd의 값을 집어넣고 아래에서 
+    	//마찬가지로 id가 pwd인것을 찾은후 value를 pwd변수에 대입
+    	var param={};
+    	//{}란 param 구조체 틀에
+    	param["userId"]=id;
+    	// key:userId, value:id(정확하겐 id의 value)
     	param["userPwd"]=pwd;
-    	param=JSON.stringify(param);//.stringify(param)은 뭘하는거신가?<<prram을 JSON구조로 만들어서 다시 param에 집어넣는다.(pram이 바뀜.)
+    	// key:userPwd, value:pwd(정확하겐 pwd의 value)
+    	param=JSON.stringify(param);
+    	//userId,userPwd두개의 키값을 가진 params배열을 JSON구조로 파싱해서 param변수에 대입한후 
+    	//id와 pwd의 value가 3일때 param은 {userId:3 , userPwd:3}의 구조채로 파씽되는게 맞는건가요?
     	var a = {
 	        type     : "POST"
-	    ,   url      : "/user/login_ok.jsp"
+	        //POST타입으로 
 	    ,   dataType : "json" 
+	    //넘기는 데이터 타입은 json이고
 	    ,   beforeSend: function(xhr) {
 	        xhr.setRequestHeader("Accept", "application/json");
 	        xhr.setRequestHeader("Content-Type", "application/json");
-	    }
+	    }//모릅니다.
 	    ,   data     : param
+	    //data는 param=>이런 구조체를{userId:3 , userPwd:3}
+	    ,   url      : "/user/login_ok.jsp"
+	    //url이 login_ok.jsp에 넘기고
+	    
 	    ,   success : function(result){
+	    	//json구조체로 왔을때 
 	    	alert(result.msg);
 	    	if(result.login=="ok"){
 	    		location.href = "<%=rootPath%>/main.jsp";
