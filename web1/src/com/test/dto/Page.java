@@ -30,7 +30,7 @@ public class Page {
 	private void calPage(){
 		totalPageCnt = (totalCnt/rowCnt)+1;//105/10+1=11 <총 페이지 숫자. 
 		startRow = (nowPage-1) * rowCnt;//(105-1)*10=100<현제 페이지의 시작로우.
-		startBlock =((nowPage-1)/blockCnt)*blockCnt+1;//((105-1)/10)*10+1=101<		시작블럭이면 11이되야될텐데 101이나오는이유는??
+		startBlock =((nowPage-1)/blockCnt)*blockCnt+1;//((105-1)/10)*10+1=101<		
 		endBlock = startBlock+blockCnt-1;//11+10-1=20<end블럭
 		if(endBlock>=totalPageCnt){//11>=11 <end블럭이 총페이지숫자보다 같거나 클시 총페이지=end블럭.
 			endBlock = totalPageCnt;
