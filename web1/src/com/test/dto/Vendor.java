@@ -10,6 +10,7 @@ public class Vendor {
 	private String viCredat;
 	private String viCretim;
 	private String command;
+	private Page page;
 	public int getViNum() {
 		return viNum;
 	}
@@ -58,13 +59,18 @@ public class Vendor {
 	public void setCommand(String command) {
 		this.command = command;
 	}
+	public Page getPage() {
+		return page;
+	}
+	public void setPage(Page page) {
+		this.page = page;
+	}
 	@Override
 	public String toString() {
 		return "Vendor [viNum=" + viNum + ", viName=" + viName + ", viDesc=" + viDesc + ", viAddress=" + viAddress
 				+ ", viPhone=" + viPhone + ", viCredat=" + viCredat + ", viCretim=" + viCretim + ", command=" + command
-				+ "]";
+				+ ", page=" + page + "]";
 	}
-	
 	
 	
 }

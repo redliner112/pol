@@ -31,107 +31,60 @@
 </div>
 
 <script>
+var pageInfo={};
+var nowPage = "<%=request.getParameter("nowPage")%>";
+if(nowPage=="null"){
+	nowPage = "1";
+}
 
 $("#btnInsert").click(function(){
-	location.href="/goods/goods_insert.jsp";
+	location.href="/vendor/vendor_insert.jsp";
 })
-$("#searchVendor").click(function() {
-	var viName = $("#viName").val().trim();
-	if(viName==""){
-		alert("회사명을 입력해주세요.");
-		return;
+
+function callback(results){
+	var vendorList = results.list;
+	var search = results.search;
+	var resultStr = "";
+	for(var i=0,max = vendorList.length;i<max;i++){
+		var vendor = vendorList[i];
+		resultStr +="<tr data-view='" + vendor.viNum + "'>";
+		resultStr +="<td class='text-center'>" + vendor.viNum + "</td>";
+		resultStr +="<td class='text-center'>" + vendor.viName + "</td>";
+		resultStr +="<td class='text-center'>" + vendor.viDesc + "</td>";
+		resultStr +="<td class='text-center'>" + vendor.viAddress + "</td>";
+		resultStr +="<td class='text-center'>" + vendor.viPhone + "</td>";
+		resultStr +="</tr>";
 	}
-	var params = "command=list&viName=" + viName;
-	$.ajax({ 
-    		type     : "POST"
-	    ,   url      : "/list.vendor"
-	    ,   dataType : "json" 
-	    ,   data     : params
-	    
-	    ,   success : function(result){
-	    	$('#table').bootstrapTable('destroy');
-			var resultStr = "";
-			for(var i=0, max=result.length;i<max;i++){
-				var vendor = result[i];
-				resultStr += "<tr data-view='" + vendor.viNum + "'>";
-				resultStr +="<td class='text-center'>" + vendor.viNum + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viName + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viDesc + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viAddress + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viPhone + "</td>";
-				resultStr +="</tr>";
-			}
-	    	$("#result_tbody").html(resultStr);
-	    }
-	    ,   error : function(xhr, status, e) {
-		    	alert("에러 : "+e);
-		},
-		complete  : function() {
-		}
-	});
-});
+	$("#result_tbody").html(resultStr);
+	$("tbody[id='result_tbody']>tr[data-view]").click(function() {
+		var params = {};
+		params["viNum"] = this.getAttribute("data-view");
+		params["command"] = "view";
+		var page={};
+		page["nowPage"] = pageInfo.nowPage;
+		params["page"] = page;
+		movePageWithAjax(params,"/list.vendor",callBackView)
+	})
+}
+function callBackView(result){
+	var url = result.url + "?nowPage=" + result.page.nowPage	 + "&viNum="
+			 + result.vendor.viNum;
+	url +="&viName=" + result.vendor.viName;
+	url +="&viDesc=" + result.vendor.viDesc;
+	url +="&viAddress=" + result.vendor.viAddress;
+	url +="&viPhone=" + result.vendor.viPhone;
+	location.href = url;
+}
 
 $(document).ready(function(){
-		var params = "command=list&viNum=" +viNum;
-	$.ajax({
-			type	:"POST"
-		,	dataType : "json"
-		,	data	:params
-		,	url		:"/list.vendor"
-		
-		,	success	:function(result){
-			$("#table").bootstrapTable('destroy');
-			var resultStr = "";
-			for(var i=0,max=result.length;i<max;i++){
-				var vendor = result[i];
-				resultStr +="<tr data-view='" + vendor.viNum + "'>";
-				resultStr +="<td class = 'text-center'>" + vendor.viNum + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viName + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viDesc + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viAddress + "</td>";
-				resultStr +="<td class='text-center'>" + vendor.viPhone + "</td>";
-				resultStr +="</tr>";
-			}
-			$("#result_tbody").html(resultStr);
-		}
-		 ,   error : function(xhr, status, e) {
-		    	alert("에러 : "+e);
-		},
-		complete  : function() {
-		}
-	});
-});
-
-$("tbody[id='result_tbody']>tr[data-view]").click(function(){
-	var params = "command=view";
-	$.ajax({ 
-		type     : "POST"
-    ,   url      : "/list.vendor"
-    ,   dataType : "json" 
-    ,   data     : params
-    
-    ,   success : function(result){
-    	$('#table').bootstrapTable('destroy');
-		var resultStr = "";
-		for(var i=0, max=result.length;i<max;i++){
-			var vendor = result[i];
-			resultStr += "<tr data-view='" + vendor.viNum + "'>";
-			resultStr +="<td class='text-center'>" + vendor.viNum + "</td>";
-			resultStr +="<td class='text-center'>" + vendor.viName + "</td>";
-			resultStr +="<td class='text-center'>" + vendor.viDesc + "</td>";
-			resultStr +="<td class='text-center'>" + vendor.viAddress + "</td>";
-			resultStr +="<td class='text-center'>" + vendor.viPhone + "</td>";
-			resultStr +="</tr>";
-		}
-    	$("#result_tbody").html(resultStr);
-    }
-    ,   error : function(xhr, status, e) {
-	    	alert("에러 : "+e);
-	},
-	complete  : function() {
-	}
-});
-});
+	var page = {};
+	page["nowPage"] = nowPage;
+	
+	var params={};
+	params["page"] = page;
+	params["command"] = "list";
+	movePageWithAjax(params,"/list.vendor",callback);
+})
 
 </script>
 </body>

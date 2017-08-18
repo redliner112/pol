@@ -99,6 +99,8 @@ function alertOp(){
             <li><a href="/role/role_select.jsp">권한정보가기</a></li>
             <li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
             <li><a href="/goods/goods_list.jsp">goodsList</a></li>
+            <li><a href="/vendor/vendor_list.jsp">vendorList</a></li>
+         
           </ul>
           
         </div><!--/.nav-collapse -->

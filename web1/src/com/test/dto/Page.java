@@ -13,7 +13,7 @@ public class Page {
 	
 	public Page(){
 		calPage();
-	}//이거 왜해준건지 모르겠음.
+	}//페이징 계산할려고..
 	
 	public void setStartBlock(int startBlock) {
 		this.startBlock = startBlock;

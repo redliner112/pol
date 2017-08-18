@@ -77,7 +77,6 @@ public class GoodsService {
 			}
 			sql += " order by gi.ginum";
 			sql += " limit ?,?";
-			//
 			Page page = pGoods.getPage();
 			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
