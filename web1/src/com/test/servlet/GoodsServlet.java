@@ -83,7 +83,7 @@ public class GoodsServlet extends HttpServlet {
 			int result = gs.insertGoods(goods);
 			HashMap resultMap = new HashMap();
 			resultMap.put("msg", "저장이 완료되쪄");
-			resultMap.put("url", "/goods/goods_List.jsp");
+			resultMap.put("url", "/goods/goods_list.jsp");
 			if (result != 1) {
 				resultMap.put("msg", "저장이 실패해쪄");
 				resultMap.put("url", "");

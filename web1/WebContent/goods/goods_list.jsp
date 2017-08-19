@@ -23,6 +23,7 @@
 		<tbody id="result_tbody">
 		</tbody>
 	</table>
+	<button id="btnInsert" class = "btn btn-primary" type = "button">상품등록</button>
 </div>
 
 <div class="jb-center" style="text-align: center">
@@ -37,6 +38,10 @@
 	if (nowPage == "null") {
 		nowPage = "1";
 	}
+	$("#btnInsert").click(function(){
+		location.href="/goods/goods_insert.jsp";
+	})
+	
 	$("#searchGoods").click(function() {
 		var giName = $("#giName").val().trim();
 		var viNum = $("#s_vendor").val().trim();

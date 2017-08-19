@@ -95,7 +95,7 @@ function goBoard(biNum,param2){
 		DBConn.closeCon();
 	}
 	%>
- <input type = "button" value = "게시글작성" onclick = "doMovePage('insert')"/>
+ <input type = "button" value = "게시글작성" onclick = "doMovePage('insertBoard')"/>
  <input type = "button" value = "메인가기" onclick="doMovePage('main')"/>
 	</div>
 </div>

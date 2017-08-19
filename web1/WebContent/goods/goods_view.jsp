@@ -64,7 +64,12 @@ function callBackView(result){
 	}
 }
 $("#btnUpdate").click(function(){
-	location.href="/goods/goods_update.jsp?nowPage=" + <%=request.getParameter("nowPage")%> + "&giNum=" + <%=request.getParameter("giNum")%>
+	location.href="/goods/goods_update.jsp?nowPage=" + <%=request.getParameter("nowPage")%> 
+					+ "&giNum=" + <%=request.getParameter("giNum")%> 
+					+ "&giName=" + "<%=request.getParameter("giName")%>"
+					+ "&giDesc=" + "<%=request.getParameter("giDesc")%>"
+					+ "&viNum="+ "<%=request.getParameter("viNum")%> "
+					+ "&viName=" +"<%=request.getParameter("viName")%>"
 });
 $("#btnGoList").click(function(){
 	location.href="/goods/goods_list.jsp?nowPage=" + <%=request.getParameter("nowPage")%>

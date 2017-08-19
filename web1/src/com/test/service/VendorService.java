@@ -54,7 +54,7 @@ public class VendorService {
 	}
 	public Vendor selectVendor(Vendor pVendor) {
 		try {
-			String sql = "select vinum,viname,videsc,viaddress,viphone from vendor_info" 
+			String sql = "select vinum, viname,videsc,viaddress,viphone from vendor_info" 
 							+ " where vinum=?";
 			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
@@ -134,8 +134,8 @@ public class VendorService {
 	}
 	public int insertVender(Vendor pVendor){
 		try{
-			String sql = "insert into vendor_info(viname,videsc,viaddress,viphone)"
-					+" values(?,?,?,?)";
+			String sql = "insert into vendor_info(viname,videsc,viaddress,viphone,vicredat,vicretim)"
+					+" values(?,?,?,?,DATE_FORMAT(NOW(),'%Y%m%d'),DATE_FORMAT(NOW(),'%H%i%s'))";
 			con=DBConn.getCon();
 			ps = con.prepareStatement(sql);
 			ps.setString(1,pVendor.getViName());
@@ -154,6 +154,39 @@ public class VendorService {
 				ps.close();
 				DBConn.closeCon();
 			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	public int updateVendor(Vendor pVendor) {
+		try {
+			String sql = "update vendor_info";
+					sql +=" set viName=?,";
+					sql +=" viDesc=?,";
+					sql +=" viaddRess=?,";
+					sql +=" viPhone=?";
+					sql +=" where vinum=?";
+					con = DBConn.getCon();
+					ps = con.prepareStatement(sql);
+					ps.setString(1, pVendor.getViName());
+					ps.setString(2, pVendor.getViDesc());
+					ps.setString(3, pVendor.getViAddress());
+					ps.setString(4, pVendor.getViPhone());
+					ps.setInt(5, pVendor.getViNum());
+					int result = ps.executeUpdate();
+					con.commit();
+					return result;
+			
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}

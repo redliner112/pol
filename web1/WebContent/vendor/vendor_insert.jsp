@@ -41,7 +41,7 @@ $("#btnInsert").click(function(){
 	params["viDesc"] = $("#viDesc").val();
 	params["viAddress"] = $("#viAddress").val();
 	params["viPhone"] = $("#viPhone").val();
-	movePageWithAjax(params,"/liest.vendr",callbackInsert);
+	movePageWithAjax(params,"/list.vendor",callbackInsert);
 })
 function callbackInsert(result){
 	alert(result.msg);

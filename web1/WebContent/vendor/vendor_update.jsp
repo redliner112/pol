@@ -6,11 +6,6 @@
 		<thead>
 			<tr>
 			<th colspan="2" class = "text-center"><h5 class="form-signin-heading">회사수정페이지</h5>
-			</tr>
-			<tr>
-				<td class="col-md-2">회사번호</td>
-				<td class="col-md-4"><input type ="text" name = "viNum" id = "viNum"></td>
-			</tr>
 			<tr>
 				<td class="col-md-2">회사이름</td>
 				<td class="col-md-4"><input type ="text" name = "viName" id ="viName"></td>
@@ -39,27 +34,40 @@
 <body>
 <script>
 $(document).ready(function(){
-	var params = {};
-	params["command"] = "vendorlist";
-	movePageWithAjax(params,"/list.vendor",callback);
-})
-function callback(result){
 	var params={};
 	params["command"] = "view";
 	params["viNum"] = "<%=request.getParameter("viNum")%>";
 	var page={};
 	page["nowPage"] = "<%=request.getParameter("nowPage")%>";
 	params["page"] = page;
-	movePageWithAjax(params,"/list.goods",callback2);
-}
+	movePageWithAjax(params,"/list.vendor",callback2);
+})
+
 function callback2(result){
-	$("#viNum").val(result.vendor.viNum);
 	$("#viName").val(result.vendor.viName);
 	$("#viDesc").val(result.vendor.viDesc);
 	$("#viAddress").val(result.vendor.viAddress);
 	$("#viPhone").val(result.vendor.viPhone);
-	
 }
+$("#btnUpdate").click(function(){
+	var params = {};
+	params["command"] = "update";
+	params["viNum"] = "<%=request.getParameter("viNum")%>";
+	params["viName"] = $("#viName").val();
+	params["viDesc"] = $("#viDesc").val();
+	params["viAddress"] = $("#viAddress").val();
+	params["viPhone"] = $("#viPhone").val();
+	movePageWithAjax(params,"/list.vendor",callbackinsert);
+	
+	function callbackinsert(result){
+		alert(result.msg);
+		location.href = result.url;
+		
+	}
+})
+$("#goList").click(function(){
+	history.back();
+})
 </script>
 </body>
 </html>

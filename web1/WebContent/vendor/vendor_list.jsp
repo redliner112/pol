@@ -12,9 +12,9 @@
 		class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<th data-field="giNum" class="text-center">회사번호</th>
-				<th data-field="giName" class="text-center">회사이름</th>
-				<th data-field="giDesc" class="text-center">회사설명</th>
+				<th data-field="viNum" class="text-center">회사번호</th>
+				<th data-field="viName" class="text-center">회사이름</th>
+				<th data-field="viDesc" class="text-center">회사설명</th>
 				<th data-field="viNum" class="text-center">회사주소</th>
 				<th data-field="viName" class="text-center">회사전화번호</th>
 			</tr>

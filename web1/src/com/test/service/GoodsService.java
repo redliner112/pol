@@ -159,7 +159,7 @@ public class GoodsService {
 		PreparedStatement ps = null;
 		try {
 			String sql = "insert into goods_info(giname,gidesc,vinum,gicredat,gicretim)";
-			sql+=" values(?,?,?,DATE_FORMAT(NOW(),'%Y%m%d'),DATA_FORMAT(NOW(),'%H%i%s'))";
+			sql+=" values(?,?,?,DATE_FORMAT(NOW(),'%Y%m%d'),DATE_FORMAT(NOW(),'%H%i%s'))";
 			con = DBConn.getCon(); 
 			ps = con.prepareStatement(sql);
 			ps.setString(1, pGoods.getGiName());
@@ -190,8 +190,8 @@ public class GoodsService {
 			String sql = "update goods_info";
 			sql+=" set giname=?,";
 			sql+=" gidesc = ?,";
-			sql+="vinum=?";
-			sql+="where giname=?";
+			sql+=" vinum=?";
+			sql+=" where ginum=?";
 			con = DBConn.getCon(); 
 			ps = con.prepareStatement(sql);
 			ps.setString(1, pGoods.getGiName());
