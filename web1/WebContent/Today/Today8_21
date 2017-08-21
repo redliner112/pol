@@ -1,0 +1,17 @@
+form
+1.이동방법.
+	`submit
+	`button태그
+2.특징
+	`action태그에있는 url로 통째로 이동한다.
+	`post방식으로 안써주면 get방식~
+	
+	innerHTML
+	그려놓고 파씽~그려놓고 파씽이래
+	
+	insertAdjacentHTML
+	1.넣는부분이 4개다.
+		beforebegin
+		aftergegin
+		geforeend
+		afterend

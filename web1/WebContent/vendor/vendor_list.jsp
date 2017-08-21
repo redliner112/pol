@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
+<style>
+body {
+  background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
+}
+</style>
 <div class="container">
 	<div class="container" style="text-align: center; padding-top: 20px;padding-bottom: 20px;">
 		<label>회사이름 : </label> 

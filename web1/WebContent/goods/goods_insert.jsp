@@ -1,6 +1,11 @@
 <%@ include file="/common/header.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<style>
+body {
+  background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
+}
+</style>
 	<div class="container-view">
 		<table id="table" data-height="460"class="table table-borderd table-hover">
 		<thead>

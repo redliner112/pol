@@ -4,6 +4,11 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.User_Info"%>
+<style>
+body {
+  background-image:url('http://www.asrgo.com/files/attach/images/8131/206/056/bg_blog.jpg');
+}
+</style>
 	<div class="container-view"> 
 		<table id="table"  data-height="460"	class="table table-bordered table-hover">
 		<thead>
