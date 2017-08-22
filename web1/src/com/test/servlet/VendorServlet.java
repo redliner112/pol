@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.test.dto.Page;
 import com.test.dto.Vendor;
+import com.test.service.ServiceFactory;
 import com.test.service.VendorService;
 
 public class VendorServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private VendorService vs = new VendorService();
+	private VendorService vs;
 	// VendorService()함수를 vs에 대입
 	private Gson g = new Gson();
 
@@ -33,11 +34,12 @@ public class VendorServlet extends HttpServlet {
 		
 		String command  = vendor.getCommand();
 		Page page = vendor.getPage();
+		vs = ServiceFactory.getVendorService();
 		
 		if(command.equals("list")){
 		int totalCnt = vs.getTotalCount(vendor);
 		page.setTotalCnt(totalCnt);
-		List<Vendor> list = vs.selectVendorsList(vendor);
+		List<Vendor> list = vs.selectVendorList(vendor);
 		HashMap resultMap = new HashMap();
 		resultMap.put("page", page);
 		resultMap.put("list", list);	
@@ -68,14 +70,14 @@ public class VendorServlet extends HttpServlet {
 			doProcess(response,jsonStr);
 			
 		}else if(command.equals("vendorlist")){
-			List<Vendor> vendorList = vs.selectVendorsList(vendor);
+			List<Vendor> vendorList = vs.selectVendorList(vendor);
 			HashMap resultMap = new HashMap();
 			resultMap.put("vendorList", vendorList);
 			String jsonStr = g.toJson(resultMap);
 			doProcess(response,jsonStr);
 			
 		}else if(command.equals("insert")){
-			int result = vs.insertVender(vendor);
+			int result = vs.insertVendor(vendor);
 			HashMap resultMap = new HashMap();
 			resultMap.put("msg", "저장완료되쪄");
 			resultMap.put("url", "/vendor/vendor_list.jsp");

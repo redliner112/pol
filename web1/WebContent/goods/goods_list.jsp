@@ -94,6 +94,7 @@ body {
 		}
 		makePagination(pageInfo, "page");
 		setEvent(pageInfo, params, "/list.goods");
+		
 		$('#table').bootstrapTable('destroy');
 		var resultStr = "";
 		for (var i = 0, max = goodsList.length; i < max; i++) {

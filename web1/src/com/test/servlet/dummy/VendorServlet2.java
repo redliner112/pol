@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.test.dto.Vendor;
-import com.test.service.VendorService;
+import com.test.service.VendorServiceImpl;
 
 public class VendorServlet2 extends HttpServlet{
 	
 	
 	private static final long serialVersionUID = 1L;
-	private VendorService vs = new VendorService();
+	private VendorServiceImpl vs = new VendorServiceImpl();
 	//VendorService()함수를 vs에 대입
 	private Gson g = new Gson();	
 	

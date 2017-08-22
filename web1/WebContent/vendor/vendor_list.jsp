@@ -42,6 +42,22 @@ if(nowPage=="null"){
 	nowPage = "1";
 }
 
+$("#searchVendor").click(function(){
+	var viName = $("#viName").val().trim();
+	if(viName==""){
+		alert("회사명을 입력해주세요");
+		return
+	}
+	var params = {};
+	if(viName !=""){
+		params["viName"] = viName;
+		params["command"] = "list";
+		var page = {};
+		page["nowPage"] = nowPage;
+		params["page"] = page;
+		movePageWithAjax(params,"/list.vendor",callback);
+	}
+})
 $("#btnInsert").click(function(){
 	location.href="/vendor/vendor_insert.jsp";
 })
@@ -49,6 +65,12 @@ $("#btnInsert").click(function(){
 function callback(results){
 	var vendorList = results.list;
 	var search = results.search;
+	pageInfo = results.page;
+	
+	makePagination(pageInfo,"page");
+	setEvent(pageInfo,params,"/list.vendor");
+	
+	$("#table").bootstrapTable("destroy");
 	var resultStr = "";
 	for(var i=0,max = vendorList.length;i<max;i++){
 		var vendor = vendorList[i];
