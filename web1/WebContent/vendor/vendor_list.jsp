@@ -51,12 +51,13 @@ $("#searchVendor").click(function(){
 	var params = {};
 	if(viName !=""){
 		params["viName"] = viName;
+	}
 		params["command"] = "list";
 		var page = {};
 		page["nowPage"] = nowPage;
 		params["page"] = page;
 		movePageWithAjax(params,"/list.vendor",callback);
-	}
+	
 })
 $("#btnInsert").click(function(){
 	location.href="/vendor/vendor_insert.jsp";
@@ -66,9 +67,12 @@ function callback(results){
 	var vendorList = results.list;
 	var search = results.search;
 	pageInfo = results.page;
-	
-	makePagination(pageInfo,"page");
-	setEvent(pageInfo,params,"/list.vendor");
+	var params = {};
+	if(search.viName){
+		params["viName"] = search.viName;
+	}
+	makePagination(pageInfo, "page");
+	setEvent(pageInfo, params, "/list.vendor");
 	
 	$("#table").bootstrapTable("destroy");
 	var resultStr = "";
@@ -83,6 +87,7 @@ function callback(results){
 		resultStr +="</tr>";
 	}
 	$("#result_tbody").html(resultStr);
+	
 	$("tbody[id='result_tbody']>tr[data-view]").click(function() {
 		var params = {};
 		params["viNum"] = this.getAttribute("data-view");

@@ -105,7 +105,9 @@ public class VendorServiceImpl implements VendorService {
 			}
 			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setString(1,"%" + pVendor.getViName() + "%"	);
+			if(pVendor.getViName()!=null) {
+				ps.setString(1,"%" + pVendor.getViName() + "%"	);
+			}
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				return rs.getInt(1);

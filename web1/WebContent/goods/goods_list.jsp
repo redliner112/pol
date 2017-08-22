@@ -73,6 +73,7 @@ body {
 		pageInfo = results.page;
 		var vendorList = results.vendorList;
 		var search = results.search;
+		
 		var selStr = "<option value=''>회사선택</option>";
 		for (var i = 0, max = vendorList.length; i < max; i++) {
 			var vendor = vendorList[i];
