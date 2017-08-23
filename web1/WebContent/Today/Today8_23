@@ -19,3 +19,24 @@ form
 		static 과 interface
 		
 interface함수들의  default값은 public 이다.
+
+maven jar파일 d드라이브 하드코딩경로 하는법.
+
+main/java->com.iot.sp    -여긴 자바파일만
+main/resources->db		-여긴 css,jsp
+위 두개가 
+classes -com.iot.sp+db
+
+mybatice(마이바티스?)
+프로퍼티스
+${}jsp의 표현식.
+
+constructor  생성자.
+argement  파라메터.
+
+스프링에서 중요한것.
+ioc 
+di
+aop
+
+autowired  자동연결.
